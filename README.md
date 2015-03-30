@@ -4,7 +4,7 @@ MSAN 622 Information Visualization
 |  **Name:** | Amit Kumar Yadav           |
 |-----------:|:-----------------------|
 | **Email:** | <ayadav3@dons.usfca.edu> |
-|   **Web:** | <http://msan622.github.io/spring-2015-msan622> |
+|   **Web:** | <http://ayadav3.github.io/MSAN622_InfoVisualization>
 
 ## About Me ##
 
