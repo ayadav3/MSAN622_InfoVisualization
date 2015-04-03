@@ -8,5 +8,4 @@ MSAN 622 Information Visualization
 
 ## About Me ##
 
-I am a graduate student in the analytics program at the [University of San Francisco](http://www.usfca.edu/). .
-
+I am a graduate student in the analytics program at the [University of San Francisco](http://www.usfca.edu/). I have bachelors in Computer Science. I have about 3.5 years of professional work experience. I am very excited about exploring D3 for data visualization. Please click on the links above to see visualizations created by me!
