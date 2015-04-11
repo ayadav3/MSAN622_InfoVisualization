@@ -3,15 +3,39 @@
 <style>
 
 .bar {
-  fill: steelblue;
+  fill: #998ec3;
+}
+
+div.normal {
+  font-style: normal;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+br.normal {
+  font-style: normal;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+br.italic {
+  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+div.italic {
+  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
+
 }
 
 .bar.vowel{
-  fill: black;
+  fill: #f1a340;
 }
 
 .bar:hover{
-  fill: blue;
+  fill: maroon;
 }
 
 
@@ -38,8 +62,8 @@
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  background: white;
+  color: black;
   border-radius: 2px;
 }
 
@@ -95,37 +119,31 @@
     <div>
       <h4> Name: Amit Kumar Yadav</h4>
     </div>
-    <div class="col-md-8 col-sm-offset-2">
+    <div class="normal">
         <h4>Functionalities Implemented</h4>
-        <br>
-
-          <dl >
+        <br class = "italic">
+          <p class ="normal">
               <dt><h5>C-level Functionality</h5></dt>
-
-              <dd>Gets the query string from the page URL, decodes the text, and converts it to lower case.</dd>
-
-              <dd>Loops through the text and store the count for all letters in a Javascript object.</dd>
-
-              <dd>Logs the decoded input text and counts to the console.</dd>
-
-              <dd>Displays a basic non-interactive bar chart of the counts using D3 in an SVG. </dd>
-
-              <dd>Modified the tick label formatting: changed number of decimal points visible, size and color.</dd>
-              <dd>Added grid lines. </dd>
-              <dd>Coded vowels with differnt color. </dd>
-              <dd>On mouseover event, the bars change color. </dd>
+              <dd><li>Gets the query string from the page URL, decodes the text, and converts it to lower case.</li></dd>
+              <dd><li>Loops through the text and store the count for all letters in a Javascript object.</li></dd>
+              <dd><li>Logs the decoded input text and counts to the console.</li></dd>
+              <dd><li>Displays a basic non-interactive bar chart of the counts using D3 in an SVG.</li> </dd>
+              <dd><li>Modified the tick label formatting: changed number of decimal points visible, size and color.</li></dd>
+              <dd><li>Added grid lines. </li></dd>
+              <dd><li>Coded vowels with different color. </li></dd>
+              <dd><li>On mouseover event, the bars change color. </li></dd>
 
               <br>
 
               <dt><h5>B-level Functionality</h5></dt>
 
-              <dd>Tooltip is displayed with mouseover event.</dd>
+              <dd><li>Tooltip is displayed with mouseover event.</li></dd>
 
               <br>
 
               <dt><h5>A-level Functionality</h5></dt>
 
-              <dd>At the start of your visualization, shows one bar at a time and smoothly grows each bar from the bottom up to its value.</dd>
+              <dd><li>At the start of your visualization, shows one bar at a time and smoothly grows each bar from the bottom up to its value.</li></dd>
               
                <br>
 
@@ -143,14 +161,16 @@
 
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script>
-  var xx = location.search;
-  xx=xx.replace(/[^A-Za-z]/g, "").toLowerCase();
-
+  var search_str = location.search;
+  search_str=search_str.replace(/[^A-Za-z]/g, "").toLowerCase();
+  if (search_str.length == 0){
+    search_str = "information Visualization"
+  }
     var svg=document.getElementById('demo');
     var height=svg.height.baseVal.value;
     var width=svg.width.baseVal.value;
     //console.log(lastParag);
-    frequency_func("demo",xx,height,width)
+    frequency_func("demo",search_str,height,width)
 
 
   function frequency_func(svgid,x,height2,width2) {
@@ -283,8 +303,9 @@
 
     for (i = 0; i < y_ticks.length; i++) {
         svg.append("line")          // attach a line
-        .style("stroke", "grey") 
-        .style("stroke-dasharray", ("3, 3")) // colour the line
+        .style("stroke", "#D3D3D3") 
+        .style("stroke-line", ("3, 3"))
+        .style("stroke-width","1") // 
         .attr("x1", 0 )     
         .attr("y1", y_ticks[i])      // y position of the first end of the line
         .attr("x2", width)     
@@ -293,7 +314,7 @@
 
     for (i = 0; i < x_ticks.length; i++) {
         svg.append("line")          // attach a line
-        .style({"stroke":"grey","stroke-dasharray":("3, 3")})  // colour the line
+        .style({"stroke":"#D3D3D3","stroke-line":("3, 3")})  
         .attr("x1", x_ticks[i] )     // x position of the first end of the line
         .attr("y1", 0)      // y position of the first end of the line
         .attr("x2", x_ticks[i])     
