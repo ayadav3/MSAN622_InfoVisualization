@@ -96,10 +96,10 @@ div.italic {
 
   <style type="text/css">
       body {
-          padding-top: 100px;
+          padding-top: 10px;
           padding-bottom: 20px;
       }
-    .offset { margin-top: 50px; }
+    .offset { margin-top: 20px; }
   </style>
 
 
@@ -110,47 +110,45 @@ div.italic {
 <script src="d3.min.js"></script>
 
 
-
-
   <div class="row offset">
     <div class="col-lg-8 col-sm-offset-2" id="svg_holder" >
       <svg id="demo" width=960 height=500 ></svg>
     </div>
-    <div>
+    <div class = "normal">
       <h4> Name: Amit Kumar Yadav</h4>
     </div>
     <div class="normal">
-        <h4>Functionalities Implemented</h4>
-        <br class = "italic">
+        <h4><u>Functionalities Implemented</u></h4>
+
           <p class ="normal">
-              <dt><h5>C-level Functionality</h5></dt>
+              <dt><h5><i>C-level</i></h5></dt>
               <dd><li>Gets the query string from the page URL, decodes the text, and converts it to lower case.</li></dd>
-              <dd><li>Loops through the text and store the count for all letters in a Javascript object.</li></dd>
+              <dd><li>Loops through the text and stores the count for all letters in a Javascript object.</li></dd>
               <dd><li>Logs the decoded input text and counts to the console.</li></dd>
-              <dd><li>Displays a basic non-interactive bar chart of the counts using D3 in an SVG.</li> </dd>
+              <dd><li>Displayed a basic non-interactive bar chart of the counts using D3 in an SVG.</li> </dd>
               <dd><li>Modified the tick label formatting: changed number of decimal points visible, size and color.</li></dd>
               <dd><li>Added grid lines. </li></dd>
               <dd><li>Coded vowels with different color. </li></dd>
               <dd><li>On mouseover event, the bars change color. </li></dd>
 
-              <br>
 
-              <dt><h5>B-level Functionality</h5></dt>
+
+              <dt><h5><i>B-level</i></h5></dt>
 
               <dd><li>Tooltip is displayed with mouseover event.</li></dd>
 
-              <br>
+   
 
-              <dt><h5>A-level Functionality</h5></dt>
+              <dt><h5><i>A-level</i></h5></dt>
 
               <dd><li>At the start of your visualization, shows one bar at a time and smoothly grows each bar from the bottom up to its value.</li></dd>
               
-               <br>
+         
 
-          <h4>Functionality Discussion</h4>
+          <h4><u>Functionality Discussion</u></h4>
 
-          <p>When the webpage launches, the letters from the following string are plotted: "information Visualization" unless there is a search query in the URL. The user can change string in the address bar of a browser.</p>
-          <p>The string is converted to lower case.  Spaces, numbers, punctuation, and special characters are dismissed. The letters are sorted alphabetically. Each bar represents the frequency of an alphabet. Each </p>
+          <p>The default string used to plot the bar chart is 'information Visualization'. The user can add new strings to the address bar to make new plots.</p>
+          <p>The string is converted to lower case.  Spaces, numbers, punctuation, and special characters are dismissed. The letters are sorted alphabetically. Each bar represents the frequency of an alphabet. When the user hovers the mouse on the bar, it will change color and display the frequency of that alphabet.</p>
 
 
           </dl>
@@ -259,7 +257,7 @@ div.italic {
 
       var gx=svg.append("g")
           .attr("class", "x axis")
-          .style("fill","green")
+          .style("fill","black")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
  
@@ -362,9 +360,11 @@ div.italic {
 
     svg.append("text")
         .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 2))
+        .attr("y", 0 - (margin.top/1.5))
         .attr("text-anchor", "middle")  
-        .style("font-size", "18px") 
+        .style("font-size", "22px")
+        .style("font-weight", "bold" )
+        .style("font-family", "sans-serif") 
         .text("Alphabets Bar Chart");
 
 }
