@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar.vowel{
+  fill: black;
+}
+
+.bar:hover{
+  fill: blue;
+}
+
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #983aa3;
+  stroke-width: 2px;
+  font-size: 16px;
+}
+.y.axis text {
+    font-family: sans-serif;
+    font-size: 12px
+}
+.x.axis text {
+    font-family: sans-serif;
+    font-size: 22px;
+}
+
+.tooltip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+</style>
+
+<head profile="amit">
+      <link rel="icon" 
+        type="image/png" 
+        href="/public_html/favicon.ico">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Information Visualization Homework 1</title>
+
+
+  <style type="text/css">
+      body {
+          padding-top: 100px;
+          padding-bottom: 20px;
+      }
+    .offset { margin-top: 50px; }
+  </style>
+
+
+</head>
+
+<body>
+
+<script src="d3.min.js"></script>
+
+
+
+
+  <div class="row offset">
+    <div class="col-lg-8 col-sm-offset-2" id="svg_holder" >
+      <svg id="demo" width=960 height=500 ></svg>
+    </div>
+    <div>
+      <h4> Name: Amit Kumar Yadav</h4>
+    </div>
+    <div class="col-md-8 col-sm-offset-2">
+        <h4>Functionalities Implemented</h4>
+        <br>
+
+          <dl >
+              <dt><h5>C-level Functionality</h5></dt>
+
+              <dd>Gets the query string from the page URL, decodes the text, and converts it to lower case.</dd>
+
+              <dd>Loops through the text and store the count for all letters in a Javascript object.</dd>
+
+              <dd>Logs the decoded input text and counts to the console.</dd>
+
+              <dd>Displays a basic non-interactive bar chart of the counts using D3 in an SVG. </dd>
+
+              <dd>Modified the tick label formatting: changed number of decimal points visible, size and color.</dd>
+              <dd>Added grid lines. </dd>
+              <dd>Coded vowels with differnt color. </dd>
+              <dd>On mouseover event, the bars change color. </dd>
+
+              <br>
+
+              <dt><h5>B-level Functionality</h5></dt>
+
+              <dd>Tooltip is displayed with mouseover event.</dd>
+
+              <br>
+
+              <dt><h5>A-level Functionality</h5></dt>
+
+              <dd>At the start of your visualization, shows one bar at a time and smoothly grows each bar from the bottom up to its value.</dd>
+              
+               <br>
+
+          <h4>Functionality Discussion</h4>
+
+          <p>When the webpage launches, the letters from the following string are plotted: "information Visualization" unless there is a search query in the URL. The user can change string in the address bar of a browser.</p>
+          <p>The string is converted to lower case.  Spaces, numbers, punctuation, and special characters are dismissed. The letters are sorted alphabetically. Each bar represents the frequency of an alphabet. Each </p>
+
+
+          </dl>
+
+    </div>
+  </div>
+
+
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script>
+  var xx = location.search;
+  xx=xx.replace(/[^A-Za-z]/g, "").toLowerCase();
+
+    var svg=document.getElementById('demo');
+    var height=svg.height.baseVal.value;
+    var width=svg.width.baseVal.value;
+    //console.log(lastParag);
+    frequency_func("demo",xx,height,width)
+
+
+  function frequency_func(svgid,x,height2,width2) {
+    var svg = d3.select("svg#" + svgid);
+
+    if (svg.empty()) {
+        console.warn("Unable to find SVG:", svgid);
+        return;
+    }
+
+    d3.select("svg").selectAll("*").remove();
+
+
+
+    function checkIsVowel( chr ){ return 'aeiou'.indexOf( chr[0].toLowerCase() ) !== -1 };
+
+    x= x.replace(/[^A-Za-z]/g, "").toLowerCase();
+    var dict_vowel = [];  
+    var dict = []; 
+    for (i = 0; i < x.length; i++) { 
+      if (x[i] in  dict) {
+          dict[x[i]]++;
+      } else {
+          dict[x[i]]=1;
+      }
+    };
+
+
+
+    var data=[];
+    for (var key in dict ){
+
+        data.push({letter:key, frequency:dict[key],vowel:checkIsVowel( key )});
+
+      }
+
+    data.sort(function(a,b){return d3.ascending(a.letter, b.letter);});
+
+    var keys = Object.keys(dict);
+    var values=[]
+    keys.forEach(function(key){
+      values.push(dict[key])
+    });
+    console.log(keys);
+    console.log(values);
+
+    var colors = {
+        "grey":   "#bbbbbb",
+        "blue":   "#377eb8",
+        "purple": "#984ea3",
+        "green":  "#4daf4a",
+        "orange": "#ff7f00"
+        };
+
+
+    var margin = {top: 50, right: 20, bottom: 30, left: 80},
+        width = width2 - margin.left - margin.right,
+        height = height2 - margin.top - margin.bottom;
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(data.length+1);
+
+    var formatxAxis = d3.format('.2f');
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickFormat(formatxAxis)
+        .ticks(5);
+
+    var svg = d3.selectAll("#svg_holder").select("svg")
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+      x.domain(data.map(function(d) { return d.letter; }));
+      y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+      var gx=svg.append("g")
+          .attr("class", "x axis")
+          .style("fill","green")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+ 
+
+
+     var gy = svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis);
+
+    gy.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("id", "tbar")
+      .attr("dy", "-5.0em")
+      .attr("dx", "-"+height/3)
+      .style("text-anchor", "end") .style("font-size",12)
+      .text("Alphabet Count");
+
+    // get tick positions and grids
+
+    var x_ticks = []
+    gx.selectAll(".tick").each(function() {
+      var tick = d3.select(this);
+      // pull the transform data out of the tick
+      var transform = d3.transform(tick.attr("transform")).translate;
+
+    // passed in "data" is the value of the tick, transform[0] holds the X value
+      //console.log("each x tick", data, transform[0])
+      x_ticks.push(transform[0]);
+    });
+    var y_ticks = []
+    gy.selectAll(".tick").each(function() {
+      var tick = d3.select(this);
+      // pull the transform data out of the tick
+      var transform = d3.transform(tick.attr("transform")).translate;
+
+      // passed in "data" is the value of the tick, transform[0] holds the X value
+      //console.log("each y tick", data, transform[1])
+      y_ticks.push(transform[1]);
+    });
+
+
+    for (i = 0; i < y_ticks.length; i++) {
+        svg.append("line")          // attach a line
+        .style("stroke", "grey") 
+        .style("stroke-dasharray", ("3, 3")) // colour the line
+        .attr("x1", 0 )     
+        .attr("y1", y_ticks[i])      // y position of the first end of the line
+        .attr("x2", width)     
+        .attr("y2", y_ticks[i]); 
+    }
+
+    for (i = 0; i < x_ticks.length; i++) {
+        svg.append("line")          // attach a line
+        .style({"stroke":"grey","stroke-dasharray":("3, 3")})  // colour the line
+        .attr("x1", x_ticks[i] )     // x position of the first end of the line
+        .attr("y1", 0)      // y position of the first end of the line
+        .attr("x2", x_ticks[i])     
+        .attr("y2", height); 
+    }
+
+    var tip = d3.tip()
+              .attr('class', 'tooltip')
+              .html(function(d) {
+            return d.frequency ;
+    });
+    svg.call(tip);
+
+    svg.selectAll(".bar")
+      .data(data)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("vowel", function(d) { return (d.vowel); })
+      .attr("x", function(d) { return x(d.letter); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(0); })
+      .attr("height", function(d) { return height - y(0); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+      
+
+
+
+    svg.selectAll("rect")
+      .transition()
+      .delay(function(d, i) { return i*500 ; })
+      .duration(600)
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("height", function(d) { return height - y(d.frequency); });
+
+
+    svg.selectAll("rect")
+          .each(function(){
+            if(d3.select(this).attr('vowel')==='true' ){
+                d3.select(this).attr("class", "bar vowel")
+
+            }
+
+          });
+
+    svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "18px") 
+        .text("Alphabets Bar Chart");
+
+}
+  </script>
+
+</body>
+
+
+</html>
