@@ -26,9 +26,9 @@ function bubble_chart(svg_id,holder_id,height,width) {
 
 // Various accessors that specify the four dimensions of data to visualize.
 function x(d) { return d['income']; }
-function y(d) { return d['life_exp']; }
+function y(d) { return d['grad']; }
 function radius(d) { return +d['population']; }
-function color(d) { return d['division']; }
+function color(d) { return d['region']; }
 function key(d) { return d['state']; }
 
 var tip = d3.tip()
@@ -150,7 +150,7 @@ d3.csv("state_x77.csv", function(error, dataset){
       .attr("x", -h/6)
       .attr("dy", ".75em")
       .attr("transform", "rotate(-90)")
-      .text("life expectancy (years)");
+      .text("Percentage of Graduates");
 
 
       //Create X axis
