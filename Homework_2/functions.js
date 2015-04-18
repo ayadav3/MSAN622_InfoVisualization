@@ -174,7 +174,7 @@ d3.csv("state_x77.csv", function(error, dataset){
       });
 }
 
-function small_multiples(svg_id,holder_id,height,width) {
+function scatter_plot(svg_id,holder_id,height,width) {
 
 
 	var svg = d3.select("svg#" + svg_id);
@@ -221,12 +221,7 @@ function small_multiples(svg_id,holder_id,height,width) {
     xAxis.tickSize(size * n);
     yAxis.tickSize(-size * n);
 
-    var brush = d3.svg.brush()
-        .x(x)
-        .y(y)
-        .on("brushstart", brushstart)
-        .on("brush", brushmove)
-        .on("brushend", brushend);
+
 
     var svg = d3.selectAll("#"+holder_id).select("svg")
         .attr('class','svg2')
@@ -271,11 +266,6 @@ function small_multiples(svg_id,holder_id,height,width) {
         .text(function(d) { return d.x; });
 
 
-
-
-
-    cell.call(brush);
-
     function plot(p) {
       var cell = d3.select(this);
 
@@ -297,32 +287,6 @@ function small_multiples(svg_id,holder_id,height,width) {
           .attr("cy", function(d) { return y(d[p.y]); })
           .attr("r", 3)
           .style("fill", function(d) { return color(d.region); });
-    }
-
-    var brushCell;
-
-    // Clear the previously-active brush, if any.
-    function brushstart(p) {
-      if (brushCell !== this) {
-        d3.select(brushCell).call(brush.clear());
-        x.domain(domainByTrait[p.x]);
-        y.domain(domainByTrait[p.y]);
-        brushCell = this;
-      }
-    }
-
-    // Highlight the selected circles.
-    function brushmove(p) {
-      var e = brush.extent();
-      svg.selectAll("circle").classed("hidden", function(d) {
-        return e[0][0] > d[p.x] || d[p.x] > e[1][0]
-            || e[0][1] > d[p.y] || d[p.y] > e[1][1];
-      });
-    }
-
-    // If the brush is empty, select all circles.
-    function brushend() {
-      if (brush.empty()) svg.selectAll(".hidden").classed("hidden", false);
     }
 
     function cross(a, b) {

@@ -141,7 +141,7 @@
        
                 <div class="col-lg-11  col-sm-offset-1" id="svg_placeholder2" >
                     <center><h4>B-Level Functionality</h4></center>
-                      <center><svg id="multiple" width=1000 height=800 ></svg></center>
+                      <center><svg id="scatter" width=1000 height=800 ></svg></center>
                 </div>
             </div>
             <div class="row offset">
@@ -164,7 +164,7 @@
 
               <dt><h5><i>B-level</i></h5></dt>
 
-              <dd>A scatterplot matrix for the variables graduation rate, life expectancy and number of murders. Also, added the brushing functionality to select a subset of the data.</dd>
+              <dd>A scatterplot matrix for the variables graduation rate, life expectancy and number of murders. </dd>
 
               <dt><h5><i>A-level</i></h5></dt>
 
@@ -173,7 +173,7 @@
          
 
           <h4><u>Discussion</u></h4>
-          <p>The bubble chart displays information about four variables. The size of the circle reflects the population of a state. The color of the cirlce represents the region. The x and y axis represent the percentage of graduates and the per capita income respectively. It is interesting to note that Alaska has the highest per capita income and a very high percentage of graduates.
+          <p>The bubble chart displays information about four variables. The size of the circle reflects the population of a state. The color of the cirlce represents the region. The x and y axis represent the percentage of graduates and the per capita income respectively. I removed the borders for the circles to decrease the clutter. It is interesting to note that Alaska has the highest per capita income and a very high percentage of graduates.
 
             The scatterplot matrix represents the interaction among the number of murders, percentage of graduates and life expectancy.</p>
 
@@ -196,10 +196,10 @@
           var width=svg.width.baseVal.value;
           bubble_chart("bubble","svg_placeholder1",height,width);
 
-          var svg=document.getElementById('multiple');
+          var svg=document.getElementById('scatter');
           var height=svg.height.baseVal.value;
           var width=svg.width.baseVal.value;
-          small_multiples("multiple","svg_placeholder2",height,width);
+          scatter_plot("scatter","svg_placeholder2",height,width);
 
           var svg=document.getElementById('parallel');
           var height=svg.height.baseVal.value;
