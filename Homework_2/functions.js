@@ -28,7 +28,7 @@ function bubble_chart(svg_id,holder_id,height,width) {
 function x(d) { return d['income']; }
 function y(d) { return d['life_exp']; }
 function radius(d) { return +d['population']; }
-function color(d) { return d['region']; }
+function color(d) { return d['division']; }
 function key(d) { return d['state']; }
 
 var tip = d3.tip()
