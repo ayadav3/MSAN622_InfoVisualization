@@ -140,7 +140,7 @@ d3.csv("state_x77.csv", function(error, dataset){
       .attr("text-anchor", "end")
       .attr("x", w/2+w/5)
       .attr("y", h+h/8)
-      .text("income per capita (dollars)");
+      .text("Income per Capita (dollars)");
 
       //Add a y-axis label.
       svg.append("text")
@@ -169,7 +169,7 @@ d3.csv("state_x77.csv", function(error, dataset){
       .attr("y", 0 - (padding / 2))
       .attr("text-anchor", "middle")  
       .style("font-size", "16px") 
-      .text("US States: Health and Wealth");
+      .text("US States: Wealth and Higher Education");
 
       });
 }
