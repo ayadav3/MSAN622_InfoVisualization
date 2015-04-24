@@ -93,7 +93,13 @@ d3.csv("seatbelts.csv", function(error, data) {
 
   focus.append("g")
       .attr("class", "y axis")
-      .call(yAxis1);
+      .call(yAxis1)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".6em")
+      .style("text-anchor", "end")
+      .text("Number of People Killed");;
 
   context.selectAll("path")
       .data(drivers)
