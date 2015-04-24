@@ -1,5 +1,5 @@
-var margin1 = {top: 10, right: 10, bottom: 120, left: 250},
-    margin2 = {top: 450, right: 10, bottom: 20, left: 250},
+var margin1 = {top: 10, right: 10, bottom: 120, left: 240},
+    margin2 = {top: 450, right: 10, bottom: 20, left: 240},
     width1 = 960 - margin1.left - margin1.right,
     height1 = 550 - margin1.top - margin1.bottom,
     height2 = 550 - margin2.top - margin2.bottom;
@@ -97,7 +97,8 @@ d3.csv("seatbelts.csv", function(error, data) {
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-      .attr("dy", ".6em")
+      .attr("dy", "-6.0em")
+      .attr("dx", "-"+height1/3)
       .style("text-anchor", "end")
       .text("Number of People Killed");;
 
@@ -131,7 +132,7 @@ d3.csv("seatbelts.csv", function(error, data) {
     var legendSpace = 120;
     var colors = d3.entries(color_div)
 
-    var svg3 = d3.select("#chart2").append("svg")
+    var svg3 = d3.select("#svg_placeholder2").append("svg")
         .attr("width", width1 + margin1.left + margin1.right)
         .attr("height", 100);
 
@@ -141,7 +142,7 @@ d3.csv("seatbelts.csv", function(error, data) {
         .append('g')
         .attr('class', 'legend')
         .attr('transform', function(d, i) { 
-          return 'translate(' + (300 + (i * (legendSize + legendSpace))) + ',' + 10 + ')';
+          return 'translate(' + (400 + (i * (legendSize + legendSpace))) + ',' + 10 + ')';
           });
 
     legend.append('rect')
