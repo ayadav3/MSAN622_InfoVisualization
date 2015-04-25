@@ -159,9 +159,6 @@ function multi_series_line(svg_id, holder_id, my_height, my_width){
     focus3.select("text").text(d[color.domain()[2]]);
 
   }
-  console.log(color.domain()[0])
-
-
 
 
 	});
