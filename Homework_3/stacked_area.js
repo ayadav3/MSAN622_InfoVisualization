@@ -1,6 +1,6 @@
 var margin1 = {top: 10, right: 10, bottom: 120, left: 240},
     margin2 = {top: 450, right: 10, bottom: 20, left: 240},
-    width1 = 960 - margin1.left - margin1.right,
+    width1 = 1100 - margin1.left - margin1.right,
     height1 = 550 - margin1.top - margin1.bottom,
     height2 = 550 - margin2.top - margin2.bottom;
 
@@ -142,7 +142,7 @@ d3.csv("seatbelts.csv", function(error, data) {
         .append('g')
         .attr('class', 'legend')
         .attr('transform', function(d, i) { 
-          return 'translate(' + (400 + (i * (legendSize + legendSpace))) + ',' + 10 + ')';
+          return 'translate(' + (500 + (i * (legendSize + legendSpace))) + ',' + 10 + ')';
           });
 
     legend.append('rect')
