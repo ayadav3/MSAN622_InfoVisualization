@@ -74,7 +74,7 @@ d3.csv("seatbelts.csv", function(error, data) {
   }));
 
   x1.domain(d3.extent(data.map(function(d) { return d.date; })));
-  y1.domain([0, 2200]);
+  y1.domain([0, 4500]);
   x2.domain(x1.domain());
   y2.domain(y1.domain());
 
@@ -98,9 +98,9 @@ d3.csv("seatbelts.csv", function(error, data) {
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", "-6.0em")
-      .attr("dx", "-"+height1/3)
+      .attr("dx", "-"+height1/4)
       .style("text-anchor", "end")
-      .text("Number of People Killed");;
+      .text("Number of People Killed or Seriously Injured");;
 
   context.selectAll("path")
       .data(drivers)
