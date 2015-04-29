@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.list{
+  padding-left: 15px
+}
+</style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Sticky Footer Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>Project Sketch</h1>
+      </div>
+      <p class="lead">Planned Tools</p>
+      <p>I plan to use D3.js and R for creating visualizations and preprocessing the data respectively. I also plan to use Tableau for generating the rough sketches of the visualizations.<br> I plan to use the following javascript libraries:<br>
+        <li>legend.js</li>
+        <li>filter.js</li>
+        <li>biPartite.js</li>
+      </p>
+      <p class="lead">Planned Techniques</p>
+      <p>I will be implementing 3 techniques on the choosen dataset. 
+        <li class="ul"><h5>Interactive Bar Plot</h5></li>
+        <p class="list">I will use the value or quantity of exports on the y-axis and the continents on the x-axis. As of now, the dataset does not have a column 'Continent'. I will add this column to the dataset soon. Also, I plan to use filters for selecting the commodity and financial year. I will add a check box to sort the bars. I hope to learn concepts of filtering and sorting.</p>
+        <li class="ul"><h5>Interactive World Map</h5></li>
+        <p class="list">I will use the world map to show the country wise exports of commodities. I plan to use filters to select a commodity and year of exports. The user can select any commodity to see the countrie which imported it. On mouse hover, a tooltip will be displayed to show the name of the countrya and the actual value of export. I hope to learn the use of geo coordinates in D3.</p>
+        <li class="ul"><h5>BiPartite</h5></li>
+        <p class="list">I plan to use a Bipartite visualization to see the different categories of commodities exported to countries in the two financial year. I will add categories for the commodities to the dataset. I will be using the value of exports in dollar terms for this visualization. Here is the link of a sample <a href="http://bl.ocks.org/NPashaP/9796212">BiPartite visualization</a>. </p>
+      </p>
+      <p class="lead">Planned Interaction</p>
+      <p>I plan to use filtering, sorting and panning for making the visualizations interactive. I will use filtering and sorting for the Bar Plots. I will use filters on the World Map visualization. Currently, I am not thinking of linking the interactions between the three visualizations.
+      </p>
+    </div>
+
+
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+
