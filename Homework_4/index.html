@@ -33,7 +33,9 @@
   font-size: 12px;
 }
 .x.axis_line path {
-  display: none;
+  fill: none;
+  stroke: grey;
+  shape-rendering: crispEdges;
 }
 .line {
   fill: none;
@@ -82,15 +84,15 @@ td {
 }
 #lineChartTitle1 {
   font-family: Verdana;
-  font-size  : 14px;
-  fill       : lightgrey;
+  font-size  : 12px;
+  fill       : black;
   font-weight: bold;
   text-anchor: middle;
 }
 #lineChartTitle2 {
   font-family: Verdana;
-  font-size  : 72px;
-  fill       : grey;
+  font-size  : 12px;
+  fill       : black;
   text-anchor: middle;
   font-weight: bold;
   /*font-style: italic;*/
@@ -245,7 +247,7 @@ d3.json('bar_chart.json', function(error, data_set) {
 */
 var datasetLineVotesChart;
 // set initial group value
-var group = "All";
+var group = "all_categories";
 d3.json('votes_line.json', function(error, data_set) {
     if (error) return console.warn(error);
     var data=[];
@@ -253,14 +255,14 @@ d3.json('votes_line.json', function(error, data_set) {
         data.push(data_set[key]);
       }
   datasetLineVotesChart =data;
-  // dsLineVotesChart();
+  dsLineVotesChart();
   });
 /*
 ############# LINE CHART RATING ##################
 -------------------------------------------
 */
 // set initial category value
-var group = "All";
+var group = "all_categories";
 var datasetLineRatingsChart;
 d3.json('ratings_line.json', function(error, data_set) {
     if (error) return console.warn(error);

@@ -116,7 +116,7 @@ var color = d3.scale.quantize().domain([data.length,0])
         /* update bar chart when user selects bar of the bar chart */
         //updateBarChart(dataset[i].category);
         // console.log(d);
-        updateLine1Chart(d.category, color(i));
+        updateLine1Chart(d.category, color(i))
         updateLine2Chart(d.category, color(i));
         
        
@@ -178,7 +178,7 @@ function dsLineRatingsChart() {
 
   console.log(group);
   var firstDatasetLineChart = datasetLineChartChosen(group);    
-  
+  console.log(firstDatasetLineChart)
   
   var basics = dsLineChartBasics();
   
@@ -280,7 +280,7 @@ yAxis.tickFormat(formatxAxis).ticks(5);
     .text("Averate Ratings over the years")
     .attr("id","lineChartTitle1") 
     .attr("x",margin.left + ((width + margin.right)/2))
-    .attr("y", 11)
+    .attr("y", 100)
     ;
 
 
@@ -449,7 +449,7 @@ yAxis.tickFormat(formatxAxis).ticks(5);
     gy.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-      .attr("dy", "-2.71em")
+      .attr("dy", "-3.71em")
       .style("text-anchor", "end")
       .text("Average Number of Votes");
       
@@ -474,14 +474,14 @@ yAxis.tickFormat(formatxAxis).ticks(5);
       .attr("class", "line")
       .attr("d", line)  
       // add color
-    .attr("stroke", "lightgrey")
+    .attr("stroke", "grey")
       ;
     
 
 
   svg.append("text")
     .text("Averate Votes over the years")
-    .attr("id","lineChartTitle1") 
+    .attr("id","lineChartTitle2") 
     .attr("x",margin.left + ((width + margin.right)/2))
     .attr("y", 11)
     ;
