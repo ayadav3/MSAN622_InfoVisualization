@@ -1,7 +1,7 @@
 <html>
     <style type="text/css">
  .container-fluid {
-  padding-top: 700px;
+  padding-top: 800px;
 }
 #bar_Chart {    
   position:absolute;
@@ -150,16 +150,13 @@ td {
       <div class ="heading">
         <center><h2>Homework 4: Movies Dataset Dashboard</h2></center>
         <center><h3>Student Name: Amit Kumar Yadav</h3></center>
+        <br><br>
+        <center><h2>Movies Dashboard</h2></center>
 
       </div>
         <div class="container">
 
-        <div class="row">
-          <div class="col-lg-6 col-md-offset-4">
-              <h3>Movies Dataset</h3>
-              </div>
-          </div>
-        </div>
+
 
           <div class="col-lg-6 offset2" id="bar_chart"></div>
           <div class="col-lg-4 col-md-offset-1">
@@ -169,7 +166,7 @@ td {
 
         </div>
 
-              <div class = "normal">
+              <div class = "container container-fluid">
               <p style="text-indent: 15em;">
               <h5><a href = "https://github.com/ayadav3/MSAN622_InfoVisualization/tree/gh-pages/Homework_4"> D3 Homework 4 Code</a></h5>
             </p>
@@ -256,7 +253,7 @@ d3.json('votes_line.json', function(error, data_set) {
         data.push(data_set[key]);
       }
   datasetLineVotesChart =data;
-  dsLineVotesChart();
+  // dsLineVotesChart();
   });
 /*
 ############# LINE CHART RATING ##################

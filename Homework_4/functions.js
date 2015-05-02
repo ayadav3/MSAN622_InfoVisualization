@@ -1,166 +1,554 @@
-function multi_series_line(svg_id, holder_id, my_height, my_width){
+/*
+############# Bar Chart ###################
+-------------------------------------------
+*/
 
-	var svg = d3.select("svg#" + svg_id);
+function dsBar_Chart(data){
 
-    d3.select("svg#" + svg_id).selectAll("*").remove();
+   // console.log(data);
 
-    var padding=100;
+    data.sort(function(a,b){return d3.ascending(a.count, b.count);});
 
-
-    //Width and height
-    var width= my_width-2*padding;
-    var height = my_height-2*padding;
-
-	var parseDate = d3.time.format("%b %Y").parse;
-		bisectDate = d3.bisector(function(d) { return d.date; }).left;
-
-	var x = d3.time.scale()
-	    .range([0, width]);
-
-	var y = d3.scale.linear()
-	    .range([height, 0]);
-
-	var color = d3.scale.category10();
-
-	var xAxis = d3.svg.axis()
-	    .scale(x)
-	    .orient("bottom");
-
-	var yAxis = d3.svg.axis()
-	    .scale(y)
-	    .orient("left");
-
-	var line = d3.svg.line()
-	    .interpolate("basis")
-	    .x(function(d) { return x(d.date); })
-	    .y(function(d) { return y(d.number); });
+  var   width = 500,
+       height = 800;
 
 
-	var svg = d3.selectAll("#"+holder_id).select("svg")
-      .append("g")
-      .attr("transform", "translate(" + padding + "," + padding + ")");
+var color = d3.scale.quantize().domain([data.length,0])
+    .range(colorbrewer.Dark2[data.length+1]);
+
+  var margin = {top: 300, right: 20, bottom: 80, left: 90};
+    var svg = d3.select("#bar_chart")
+       .append("svg")              //create the SVG element inside the <body>
+       .data([data])                   //associate our data with the document
+           .attr("width", width)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+           .attr("height", height)
+          .append("g")                //make a group to hold our bar chart
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    
+    var   width = width  - margin.left - margin.right,
+        height = height - margin.top - margin.bottom;
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .ticks(data.length+1);
+
+    var formatxAxis = d3.format(",");
 
 
-	d3.csv("seatbelts.csv", function(error, data) {
-	  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
-
-	  data.forEach(function(d) {
-	    d.date = parseDate(d.date);
-	  });
-
-	  var seatbelts = color.domain().map(function(name) {
-	    return {
-	      name: name,
-	      values: data.map(function(d) {
-	        return {date: d.date, number: +d[name]};
-	      })
-	    };
-	  });
-
-	  x.domain(d3.extent(data, function(d) { return d.date; }));
-
-	  y.domain([
-	    0,
-	    d3.max(seatbelts, function(c) { return d3.max(c.values, function(v) { return v.number; }); })
-	  ]);
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .tickFormat(formatxAxis)
+        .ticks(5);
 
 
-	  svg.append("g")
-	      .attr("class", "x axis")
-	      .attr("transform", "translate(0," + height + ")")
-	      .call(xAxis);
-
-	  svg.append("g")
-	      .attr("class", "y axis")
-	      .call(yAxis)
-	    .append("text")
-	      .attr("transform", "rotate(-90)")
-	      .attr("y", 6)
-	      .attr("dy", "-6.0em")
-        .attr("dx", "-"+height1/4)
-	      .style("text-anchor", "end")
-	      .text("Number of People Killed or Seriously Injured");
-
-	  var city = svg.selectAll(".drivers")
-	      .data(seatbelts)
-	    .enter().append("g")
-	      .attr("class", "drivers");
-
-	  city.append("path")
-	      .attr("class", "line")
-	      .attr("d", function(d) { return line(d.values); })
-	      .style("stroke", function(d) { return color(d.name); });
 
 
-	  city.append("text")
-	      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-	      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.number) + ")"; })
-	      .attr("x", 2)
-	      .attr("dy", ".35em")
-	      .text(function(d) { 
-	      	if(d.name == "front"){return "Front Passengers";}
-	      	else if (d.name == "rear"){return "Rear Passengers";} 
-	      	else {return "Drivers";}; });
-      
-    var focus1 = svg.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
+      x.domain(data.map(function(d) { return d.category; }));
+      y.domain([0, d3.max(data, function(d) { 
+        // console.log(d.measure);
+        return d.count; 
+      })]);
 
-    focus1.append("circle")
-        .attr("r", 4.5);
+      var gx=svg.append("g")
+          .attr("class", "x axis")
+          .style("fill","black")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+          .selectAll("text")  
+            .style("text-anchor", "end")
+            .style("font-size",12)
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", function(d) {
+                return "rotate(-90)" 
+                });
 
-    focus1.append("text")
-        .attr("x", 9)
-        .attr("dy", ".1em");
 
-    var focus2 = svg.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
+     var gy = svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis);
 
-    focus2.append("circle")
-        .attr("r", 4.5);
+    gy.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("dy", "-5.0em")
+      .attr("dx", "-"+height/3)
+      .style("text-anchor", "end") .style("font-size",15)
+      .text("Number of Movies");
 
-    focus2.append("text")
-        .attr("x", 9)
-        .attr("dy", ".1em");
 
-    var focus3 = svg.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
 
-    focus3.append("circle")
-        .attr("r", 4.5);
 
-    focus3.append("text")
-        .attr("x", 9)
-        .attr("dy", ".1em");
 
-    svg.append("rect")
-        .attr("class", "overlay")
-        .attr("width", width)
-        .attr("height", height)
-        .on("mouseover", function() { focus1.style("display", null); focus2.style("display", null); focus3.style("display", null); })
-        .on("mouseout", function() { focus1.style("display", "none");focus2.style("display", "none"); focus3.style("display", "none"); })
-        .on("mousemove", mousemove);
+    var rect=svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+    .attr("fill", function(d, i) { return color(i); } ) 
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.category); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.count); })
+      .attr("height", function(d) { return height - y(d.count); });
 
-  function mousemove() {
-    var x0 = x.invert(d3.mouse(this)[0]),
-        i = bisectDate(data, x0, 1),
-        d0 = data[i - 1],
-        d1 = data[i],
-        d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-    focus1.attr("transform", "translate(" + x(d.date) + "," + y(d[color.domain()[0]]) + ")");
-    focus1.select("text").text(d[color.domain()[0]]);
+    rect.on("click", update);
 
-    focus2.attr("transform", "translate(" + x(d.date) + "," + y(d[color.domain()[1]]) + ")");
-    focus2.select("text").text(d[color.domain()[1]]);
 
-    focus3.attr("transform", "translate(" + x(d.date) + "," + y(d[color.domain()[2]]) + ")");
-    focus3.select("text").text(d[color.domain()[2]]);
 
+
+    svg.append("text")
+        .attr("x", (width / 3))             
+        .attr("y", 0 - (margin.top / 6))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("Select a genre by clicking on a bar");
+
+
+  function update(d, i) {
+  
+        /* update bar chart when user selects bar of the bar chart */
+        //updateBarChart(dataset[i].category);
+        // console.log(d);
+        updateLine1Chart(d.category, color(i));
+        updateLine2Chart(d.category, color(i));
+        
+       
   }
 
 
-	});
+// ##########################################################################################################################
+  }
+
+
+/*
+############# Votes Line Chart ###################
+-------------------------------------------
+*/
+
+
+
+
+
+/*
+############# Ratings Line Chart ##################
+-------------------------------------------
+*/
+
+
+
+
+
+
+
+function datasetLineChartChosen(group) {
+  var ds = [];
+  for (x in datasetLineRatingsChart) {
+     if(datasetLineRatingsChart[x].group==group){
+      ds.push(datasetLineRatingsChart[x]);
+     } 
+    }
+
+  return ds;
+}
+
+function dsLineChartBasics() {
+
+  var margin = {top: 150, right: 10, bottom: 20, left: 150},
+      width = 600 - margin.left - margin.right,
+      height = 350 - margin.top - margin.bottom
+      ;
+    
+    return {
+      margin : margin, 
+      width : width, 
+      height : height
+    }     
+    ;
+}
+
+
+function dsLineRatingsChart() {
+
+  console.log(group);
+  var firstDatasetLineChart = datasetLineChartChosen(group);    
+  
+  
+  var basics = dsLineChartBasics();
+  
+  var margin = basics.margin,
+    width = basics.width,
+     height = basics.height
+    ;
+
+  var xScale = d3.scale.linear()
+        .domain(d3.extent(firstDatasetLineChart, function(d) { return +d.category; }) ) 
+      .range([0, width])
+      ;
+
+  var yScale = d3.scale.linear()
+      .domain([0, d3.max(firstDatasetLineChart, function(d) { return d.count; })])
+      .range([height, 0])
+      ;
+
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+  var formatxAxis = d3.format("");
+
+  xAxis.tickFormat(formatxAxis).ticks(10);
+
+
+
+
+
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+yAxis.tickFormat(formatxAxis).ticks(5);
+  
+
+
+  var line = d3.svg.line()
+      .x(function(d) { return xScale(d.category); })
+      //.x(function(d, i) { return xScale(i); })
+      .y(function(d) { return yScale(d.count); })
+      ;
+  
+  var svg = d3.select("#lineChart2").append("svg")
+      .datum(firstDatasetLineChart)
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      // create group and move it so that margins are respected (space for axis and title)
+
+  svg.append("g")
+      .attr("class", "x axis_line")
+      .attr("transform", "translate(" + margin.left + "," + (height +margin.top) + ")")
+      .call(xAxis)
+      .selectAll("text") 
+      .style("font-size",12);
+
+
+
+  gy=svg.append("g")
+      .attr("class", "y axis_line")
+      .attr("transform", "translate(" + margin.left + "," + margin.top+ ")")
+      .call(yAxis);
+
+    gy.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "-2.71em")
+      .style("text-anchor", "end")
+      .text("Average Rating");
+      
+  var plot = svg
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("id", "ratingLineChartPlot")
+      ;
+
+    /* descriptive titles as part of plot -- start */
+  var dsLength=firstDatasetLineChart.length;
+
+  // plot.append("text")
+  //   .text(firstDatasetLineChart[dsLength-1].measure)
+  //   .attr("id","lineChartTitle2")
+  //   .attr("x",width/2)
+  //   .attr("y",height/2) 
+  //   ;
+  /* descriptive titles -- end */
+      
+  plot.append("path")
+      .attr("class", "line")
+      .attr("d", line)  
+      // add color
+    .attr("stroke", "lightgrey")
+      ;
+    
+
+
+  svg.append("text")
+    .text("Averate Ratings over the years")
+    .attr("id","lineChartTitle1") 
+    .attr("x",margin.left + ((width + margin.right)/2))
+    .attr("y", 11)
+    ;
+
+
+
+}
+
+
+
+
+ /* ** UPDATE CHART ** */
+ 
+/* updates bar chart on request */
+function updateLine1Chart(group, colorChosen) {
+
+  var currentDatasetLineChart = datasetLineChartChosen(group);   
+
+  var basics = dsLineChartBasics();
+  
+  var margin = basics.margin,
+    width = basics.width,
+     height = basics.height
+    ;
+
+  var xScale = d3.scale.linear()
+      .domain([0, currentDatasetLineChart.length-1])
+      .range([0, width])
+      ;
+
+  var yScale = d3.scale.linear()
+      .domain([0, d3.max(currentDatasetLineChart, function(d) { return d.count; })])
+      .range([height, 0])
+      ;
+  
+  var line = d3.svg.line()
+    .x(function(d, i) { return xScale(i); })
+    .y(function(d) { return yScale(d.count); })
+    ;
+
+   var plot = d3.select("#ratingLineChartPlot")
+    .datum(currentDatasetLineChart)
+     ;
+     
+  /* descriptive titles as part of plot -- start */
+  var dsLength=currentDatasetLineChart.length;
+  
+  // plot.select("text")
+  //   .text(currentDatasetLineChart[dsLength-1].measure)
+  //   ;
+  /* descriptive titles -- end */
+     
+  plot
+  .select("path")
+    .transition()
+    .duration(750)          
+     .attr("class", "line")
+     .attr("d", line) 
+     // add color
+    .attr("stroke", colorChosen)
+     ;
+     
+
+     
+     // path
+     // .selectAll("title")
+     // .text(function(d) { return d.category + ": " + formatAsInteger(d.measure); })   
+     // ;  
+
+}
+
+function datasetLineVotesChartChosen(group) {
+  var ds = [];
+  for (x in datasetLineVotesChart) {
+     if(datasetLineVotesChart[x].group==group){
+      ds.push(datasetLineVotesChart[x]);
+     } 
+    }
+
+  return ds;
+}
+
+function dsLineVotesChartBasics() {
+
+  var margin = {top: 150, right: 10, bottom: 20, left: 150},
+      width = 600 - margin.left - margin.right,
+      height = 350 - margin.top - margin.bottom
+      ;
+    
+    return {
+      margin : margin, 
+      width : width, 
+      height : height
+    }     
+    ;
+}
+
+
+function dsLineVotesChart() {
+
+  console.log(group);
+  var firstDatasetLineChart = datasetLineVotesChartChosen(group);    
+  
+  
+  var basics = dsLineVotesChartBasics();
+  
+  var margin = basics.margin,
+    width = basics.width,
+     height = basics.height
+    ;
+
+  var xScale = d3.scale.linear()
+        .domain(d3.extent(firstDatasetLineChart, function(d) { return +d.category; }) ) 
+      .range([0, width])
+      ;
+
+  var yScale = d3.scale.linear()
+      .domain([0, d3.max(firstDatasetLineChart, function(d) { return d.count; })])
+      .range([height, 0])
+      ;
+
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+  var formatxAxis = d3.format("");
+
+  xAxis.tickFormat(formatxAxis).ticks(10);
+
+
+
+
+
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+yAxis.tickFormat(formatxAxis).ticks(5);
+  
+
+
+  var line = d3.svg.line()
+      .x(function(d) { return xScale(d.category); })
+      //.x(function(d, i) { return xScale(i); })
+      .y(function(d) { return yScale(d.count); })
+      ;
+  
+  var svg = d3.select("#lineChart2").append("svg")
+      .datum(firstDatasetLineChart)
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      // create group and move it so that margins are respected (space for axis and title)
+
+  svg.append("g")
+      .attr("class", "x axis_line")
+      .attr("transform", "translate(" + margin.left + "," + (height +margin.top) + ")")
+      .call(xAxis)
+      .selectAll("text") 
+      .style("font-size",12);
+
+
+
+  gy=svg.append("g")
+      .attr("class", "y axis_line")
+      .attr("transform", "translate(" + margin.left + "," + margin.top+ ")")
+      .call(yAxis);
+
+    gy.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "-2.71em")
+      .style("text-anchor", "end")
+      .text("Average Number of Votes");
+      
+  var plot = svg
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("id", "votesLineChartPlot")
+      ;
+
+    /* descriptive titles as part of plot -- start */
+  var dsLength=firstDatasetLineChart.length;
+
+  // plot.append("text")
+  //   .text(firstDatasetLineChart[dsLength-1].measure)
+  //   .attr("id","lineChartTitle2")
+  //   .attr("x",width/2)
+  //   .attr("y",height/2) 
+  //   ;
+  /* descriptive titles -- end */
+      
+  plot.append("path")
+      .attr("class", "line")
+      .attr("d", line)  
+      // add color
+    .attr("stroke", "lightgrey")
+      ;
+    
+
+
+  svg.append("text")
+    .text("Averate Votes over the years")
+    .attr("id","lineChartTitle1") 
+    .attr("x",margin.left + ((width + margin.right)/2))
+    .attr("y", 11)
+    ;
+
+
+
+}
+
+
+
+
+ /* ** UPDATE CHART ** */
+ 
+/* updates bar chart on request */
+function updateLine2Chart(group, colorChosen) {
+
+  var currentDatasetLineChart = datasetLineVotesChartChosen(group);   
+
+  var basics = dsLineVotesChartBasics();
+  
+  var margin = basics.margin,
+    width = basics.width,
+     height = basics.height
+    ;
+
+  var xScale = d3.scale.linear()
+      .domain([0, currentDatasetLineChart.length-1])
+      .range([0, width])
+      ;
+
+  var yScale = d3.scale.linear()
+      .domain([0, d3.max(currentDatasetLineChart, function(d) { return d.count; })])
+      .range([height, 0])
+      ;
+  
+  var line = d3.svg.line()
+    .x(function(d, i) { return xScale(i); })
+    .y(function(d) { return yScale(d.count); })
+    ;
+
+   var plot = d3.select("#votesLineChartPlot")
+    .datum(currentDatasetLineChart)
+     ;
+     
+  /* descriptive titles as part of plot -- start */
+  var dsLength=currentDatasetLineChart.length;
+  
+  // plot.select("text")
+  //   .text(currentDatasetLineChart[dsLength-1].measure)
+  //   ;
+  /* descriptive titles -- end */
+     
+  plot
+  .select("path")
+    .transition()
+    .duration(750)          
+     .attr("class", "line")
+     .attr("d", line) 
+     // add color
+    .attr("stroke", colorChosen)
+     ;
+     
+
+     
+     // path
+     // .selectAll("title")
+     // .text(function(d) { return d.category + ": " + formatAsInteger(d.measure); })   
+     // ;  
 
 }
