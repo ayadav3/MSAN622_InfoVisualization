@@ -4,13 +4,13 @@ function dsBar_Chart(data){
     data.sort(function(a,b){return d3.ascending(a.count, b.count);});
 
   var   width = 500,
-       height = 800;
+       height = 700;
 
 
 var color = d3.scale.quantize().domain([data.length,0])
     .range(colorbrewer.Dark2[data.length+1]);
 
-  var margin = {top: 300, right: 20, bottom: 80, left: 90};
+  var margin = {top: 150, right: 20, bottom: 80, left: 90};
     var svg = d3.select("#bar_chart")
        .append("svg")              
        .data([data])                   
