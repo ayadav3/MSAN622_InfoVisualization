@@ -1,0 +1,156 @@
+<html>
+    <style type="text/css">
+ body {
+      font: 12px sans-serif;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    .x.axis path {
+      display: none;
+    }
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+    .brush .extent {
+      stroke: #fff;
+      fill-opacity: .125;
+      shape-rendering: crispEdges;
+    }
+    .area {
+      fill: steelblue;
+      clip-path: url(#clip);
+    }
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+    .normal{
+      font: 14px sans-serif;
+    }
+    .heading{
+      fill: steelblue;
+      font: 16px sans-serif;
+    }
+  </style>
+
+
+    <title>Time Series Visualization</title>
+
+
+
+    <style type="text/css">
+        body {
+            padding-top: 100px;
+            padding-bottom: 20px;
+        }
+      .offset { margin-top: 50px; }
+    </style>
+
+  </head>
+
+  <body>
+
+      <script src="d3.min.js"></script>
+
+      <script src="functions.js">></script>
+      <script src="d3.legend.js"></script>
+
+      <script src="d3.tip.v0.6.3.js"></script>
+      <script src="colorbrewer.js"></script>
+    
+      <div class ="heading">
+        <center><h2>Homework 4: Movies Dataset Dashboard</h2></center>
+        <center><h3>Student Name: Amit Kumar Yadav</h3></center>
+
+      </div>
+         <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-sm-offset-2">
+                
+            <div class="row offset">
+                <div class="col-lg-11 col-sm-offset-1" id="svg_placeholder1" >
+                    <center><h2>Road Casualties in Great Britain 1969-84</h2></center>
+                      <center><svg id="multi_series_line" width=960 height=600 ></svg></center>
+                </div>
+            </div>
+
+            <div class="row offset">
+               <center><h2>Road Casualties in Great Britain 1969-84</h2></center>
+               <br><br><br>
+                <div class="col-lg-11  col-sm-offset-1" id="svg_placeholder2" >
+                     <center><script src="stacked_area.js"></script></center>
+                </div>
+            </div>
+              </div>
+              <div class = "normal">
+              <p style="text-indent: 15em;">
+              <h5><a href = "https://github.com/ayadav3/MSAN622_InfoVisualization/tree/gh-pages/Homework_3"> D3 Homework 3 Code</a></h5>
+            </p>
+            <p class = "normal">
+              <a href = "tableau_dashboard.html"> Tableau Dashboard</a>
+            </p>
+            <div class="normal">
+              <h5><i>Data Preprocessing</i></h5>
+              <p class="normal">
+                I used only three variables to plot the above charts. I extracted 'Drivers', 'front' and 'rear' columns from the Seatbelts dataset. Also, I had to do some preprocessing to extract the month and year.
+            </div>
+            <div class="normal">
+        <h4><u>Functionalities Implemented</u></h4>
+
+          <p class ="normal">
+              <dt><h5><i>C-level</i></h5></dt>
+              <dd>Implemented a Multi-Series Line plot and a Stacked Area Plot.</dd>
+
+              <dt><h5><i>B-level</i></h5></dt>
+
+              <dd>Implemented tooltip on Multi-Series Line chart and panning on the Stacked Area Chart. Panning is implemented along with brushing functionality.</dd>
+
+              <dt><h5><i>A-level</i></h5></dt>
+
+              <dd>Implemented brushing functionality on the Stacked Area Plot.</dd>
+              
+         
+
+          <h4><u>Discussion</u></h4>
+          <p>The Multi-Series Line Plot displays the number of deaths or serious injuries for the drivers, front seat passengers and rear seat panssengers in UK from January 1969 to December 1984. On mousehover event one can see the exact number of deaths or injuries for that point in time.<br>
+          Similarly, the Stacked Area Plot displays the same information. A legend is provided at the bottom of the plot from the different colors.<br>
+          I chose these three variables as they are naturally related to each other. The drivers are more likely to get killed or injured than the other front seat passenger. Similaryly, the front seat passengers are more likely to get killed or injured than the passengers sitting on the rear seats.
+           </p>
+
+    
+
+
+          </dl>
+
+    </div>
+    </div>
+<div class="row">
+    <div class="col-md-8 col-sm-offset-2">
+        
+    </div>
+  </div>
+
+<script >
+          var svg=document.getElementById('multi_series_line');
+          var height=svg.height.baseVal.value;
+          var width=svg.width.baseVal.value;
+          multi_series_line("multi_series_line","svg_placeholder1",height,width);
+
+
+
+
+          // var svg=document.getElementById('scatter');
+          // var height=svg.height.baseVal.value;
+          // var width=svg.width.baseVal.value;
+          // scatter_plot("scatter","svg_placeholder2",height,width);
+
+</script>
+
+  </body>
+</html>
