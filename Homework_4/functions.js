@@ -54,7 +54,7 @@ var color = d3.scale.quantize().domain([data.length,0])
 
       x.domain(data.map(function(d) { return d.category; }));
       y.domain([0, d3.max(data, function(d) { 
-        // console.log(d.measure);
+        //console.log(d.count);
         return d.count; 
       })]);
 
@@ -79,7 +79,7 @@ var color = d3.scale.quantize().domain([data.length,0])
 
     gy.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("dy", "-5.0em")
+      .attr("dy", "-4.0em")
       .attr("dx", "-"+height/3)
       .style("text-anchor", "end") .style("font-size",15)
       .text("Number of Movies");
@@ -96,26 +96,25 @@ var color = d3.scale.quantize().domain([data.length,0])
       .attr("x", function(d) { return x(d.category); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.count); })
-      .attr("height", function(d) { return height - y(d.count); });
-
-    rect.on("click", update);
+      .attr("height", function(d) { return height - y(d.count); })
+      .on("click", update);
 
 
 
 
     svg.append("text")
-        .attr("x", (width / 3))             
-        .attr("y", 0 - (margin.top / 6))
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 9))
         .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .text("Select a genre by clicking on a bar");
+        .attr("id","lineChartTitle1") 
+        .text("Breakup of Movies by Genre");
 
 
   function update(d, i) {
   
         /* update bar chart when user selects bar of the bar chart */
         //updateBarChart(dataset[i].category);
-        // console.log(d);
+        console.log(d);
         updateLine1Chart(d.category, color(i))
         updateLine2Chart(d.category, color(i));
         
@@ -125,23 +124,6 @@ var color = d3.scale.quantize().domain([data.length,0])
 
 // ##########################################################################################################################
   }
-
-
-/*
-############# Votes Line Chart ###################
--------------------------------------------
-*/
-
-
-
-
-
-/*
-############# Ratings Line Chart ##################
--------------------------------------------
-*/
-
-
 
 
 
@@ -160,9 +142,9 @@ function datasetLineChartChosen(group) {
 
 function dsLineChartBasics() {
 
-  var margin = {top: 150, right: 10, bottom: 20, left: 150},
+  var margin = {top: 70, right: 10, bottom: 20, left: 150},
       width = 600 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom
+      height = 350 - 150 - margin.bottom
       ;
     
     return {
@@ -258,14 +240,6 @@ yAxis.tickFormat(formatxAxis).ticks(5);
 
     /* descriptive titles as part of plot -- start */
   var dsLength=firstDatasetLineChart.length;
-
-  // plot.append("text")
-  //   .text(firstDatasetLineChart[dsLength-1].measure)
-  //   .attr("id","lineChartTitle2")
-  //   .attr("x",width/2)
-  //   .attr("y",height/2) 
-  //   ;
-  /* descriptive titles -- end */
       
   plot.append("path")
       .attr("class", "line")
@@ -280,7 +254,7 @@ yAxis.tickFormat(formatxAxis).ticks(5);
     .text("Averate Ratings over the years")
     .attr("id","lineChartTitle1") 
     .attr("x",margin.left + ((width + margin.right)/2))
-    .attr("y", 100)
+    .attr("y", 40)
     ;
 
 
@@ -288,11 +262,6 @@ yAxis.tickFormat(formatxAxis).ticks(5);
 }
 
 
-
-
- /* ** UPDATE CHART ** */
- 
-/* updates bar chart on request */
 function updateLine1Chart(group, colorChosen) {
 
   var currentDatasetLineChart = datasetLineChartChosen(group);   
@@ -323,13 +292,8 @@ function updateLine1Chart(group, colorChosen) {
     .datum(currentDatasetLineChart)
      ;
      
-  /* descriptive titles as part of plot -- start */
   var dsLength=currentDatasetLineChart.length;
-  
-  // plot.select("text")
-  //   .text(currentDatasetLineChart[dsLength-1].measure)
-  //   ;
-  /* descriptive titles -- end */
+
      
   plot
   .select("path")
@@ -341,12 +305,6 @@ function updateLine1Chart(group, colorChosen) {
     .attr("stroke", colorChosen)
      ;
      
-
-     
-     // path
-     // .selectAll("title")
-     // .text(function(d) { return d.category + ": " + formatAsInteger(d.measure); })   
-     // ;  
 
 }
 
@@ -410,8 +368,6 @@ function dsLineVotesChart() {
 
 
 
-
-
 var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
@@ -459,16 +415,8 @@ yAxis.tickFormat(formatxAxis).ticks(5);
       .attr("id", "votesLineChartPlot")
       ;
 
-    /* descriptive titles as part of plot -- start */
   var dsLength=firstDatasetLineChart.length;
 
-  // plot.append("text")
-  //   .text(firstDatasetLineChart[dsLength-1].measure)
-  //   .attr("id","lineChartTitle2")
-  //   .attr("x",width/2)
-  //   .attr("y",height/2) 
-  //   ;
-  /* descriptive titles -- end */
       
   plot.append("path")
       .attr("class", "line")
@@ -483,14 +431,12 @@ yAxis.tickFormat(formatxAxis).ticks(5);
     .text("Averate Votes over the years")
     .attr("id","lineChartTitle2") 
     .attr("x",margin.left + ((width + margin.right)/2))
-    .attr("y", 11)
+    .attr("y", 120)
     ;
 
 
 
 }
-
-
 
 
  /* ** UPDATE CHART ** */
@@ -528,12 +474,7 @@ function updateLine2Chart(group, colorChosen) {
      
   /* descriptive titles as part of plot -- start */
   var dsLength=currentDatasetLineChart.length;
-  
-  // plot.select("text")
-  //   .text(currentDatasetLineChart[dsLength-1].measure)
-  //   ;
-  /* descriptive titles -- end */
-     
+       
   plot
   .select("path")
     .transition()
@@ -544,11 +485,5 @@ function updateLine2Chart(group, colorChosen) {
     .attr("stroke", colorChosen)
      ;
      
-
-     
-     // path
-     // .selectAll("title")
-     // .text(function(d) { return d.category + ": " + formatAsInteger(d.measure); })   
-     // ;  
 
 }
