@@ -1,46 +1,130 @@
 <html>
     <style type="text/css">
- body {
-      font: 12px sans-serif;
-    }
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-    .x.axis path {
-      display: none;
-    }
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
-    }
-    .brush .extent {
-      stroke: #fff;
-      fill-opacity: .125;
-      shape-rendering: crispEdges;
-    }
-    .area {
-      fill: steelblue;
-      clip-path: url(#clip);
-    }
-    .overlay {
-      fill: none;
-      pointer-events: all;
-    }
-    .normal{
-      font: 14px sans-serif;
-    }
-    .heading{
-      fill: steelblue;
-      font: 16px sans-serif;
-    }
+ .container-fluid {
+  padding-top: 700px;
+}
+#BAR_large_Chart {    
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:400px;
+  height: 600px; 
+}
+#lineChart {    
+  position:absolute;
+  top:60px;
+  left:410px;
+  height: 250px;
+}
+#barChart {
+  position:absolute;
+  top:310px;
+  left:410px;
+  height: 250px;
+}
+/*for line chart*/
+.axis_line path,
+.axis_line line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  stroke-width: 2px;
+  stroke: grey;
+  font-size: 12px;
+}
+.x.axis_line path {
+  display: none;
+}
+.line {
+  fill: none;
+/*  stroke: steelblue;*/
+  stroke-width: 3px;
+}
+.axis_line text {
+    font-family: Verdana;
+    font-size: 11px;
+}
+.x.axis_line text {
+    font-family: sans-serif;
+    font-size: 8px;
+}
+.y.axis_line text {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+.title {
+   font-family: Verdana;
+    font-size: 15px;  
+    
+}
+/*for bar chart*/
+.xAxis {
+    font-family: verdana;
+    font-size: 11px;
+    fill: black;
+}  
+.yAxis {
+    font-family: verdana;
+    font-size: 11px;
+    fill: white;
+}
+  
+table {
+  border-collapse:collapse;
+  border: 0px;  
+  font-family: Verdana; 
+  color: #5C5558;
+  font-size: 12px;
+  text-align: right;      
+}
+td {
+  padding-left: 10px;   
+}
+#lineChartTitle1 {
+  font-family: Verdana;
+  font-size  : 14px;
+  fill       : lightgrey;
+  font-weight: bold;
+  text-anchor: middle;
+}
+#lineChartTitle2 {
+  font-family: Verdana;
+  font-size  : 72px;
+  fill       : grey;
+  text-anchor: middle;
+  font-weight: bold;
+  /*font-style: italic;*/
+}
+         
   </style>
 
+  <style>
+/*.bar {
+  fill: steelblue;
+}*/
+.bar:hover {
+  fill: #000000;
+}
+.x.axis path {
+  display: none;
+}
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #100C34;
+  stroke-width: 2px;
+  font-size: 16px;
+}
+.y.axis text {
+    font-family: sans-serif;
+    font-size: 12px
+}
+.x.axis text {
+    font-family: sans-serif;
+    font-size: 18px;
+}
+</style>
 
-    <title>Time Series Visualization</title>
+    <title>Movies Dashboard</title>
 
 
 
@@ -55,7 +139,15 @@
   </head>
 
   <body>
-
+    
+    <style type="text/css">
+        body {
+            padding-top: 100px;
+            padding-bottom: 20px;
+        }
+      .offset { margin-top: 100px; }
+      .offset2 { margin-top: 150px; }
+    </style>
       <script src="d3.min.js"></script>
 
       <script src="functions.js">></script>
@@ -69,20 +161,23 @@
         <center><h3>Student Name: Amit Kumar Yadav</h3></center>
 
       </div>
-         <div class="container">
-            <div class="row">
-              <div class="col-lg-6 col-sm-offset-2">
-                
-            <div class="row offset">
-        
-            </div>
+        <div class="container">
 
-            <div class="row offset">
-               <center><h2></h2></center>
-               <br><br><br>
-             
-            </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-offset-4">
+              <h3>Movies Dataset</h3>
               </div>
+          </div>
+        </div>
+
+          <div class="col-lg-6 offset2" id="bar_chart"></div>
+          <div class="col-lg-4 col-md-offset-1">
+              <div class="row" id="lineChart1" > </div>
+              <div class="row" id= "lineChart2" > </div>
+          </div>
+
+        </div>
+
               <div class = "normal">
               <p style="text-indent: 15em;">
               <h5><a href = "https://github.com/ayadav3/MSAN622_InfoVisualization/tree/gh-pages/Homework_4"> D3 Homework 4 Code</a></h5>
@@ -125,27 +220,71 @@
 
     </div>
     </div>
-<div class="row">
-    <div class="col-md-8 col-sm-offset-2">
-        
-    </div>
-  </div>
+ <script type="text/javascript">
+    
+    
+/*
+################ FORMATS ##################
+-------------------------------------------
+*/
+var   formatAsPercentage = d3.format("%"),
+    formatAsPercentage1Dec = d3.format(".1%"),
+    formatAsInteger = d3.format(","),
+    fsec = d3.time.format("%S s"),
+    fmin = d3.time.format("%M m"),
+    fhou = d3.time.format("%H h"),
+    fwee = d3.time.format("%a"),
+    fdat = d3.time.format("%d d"),
+    fmon = d3.time.format("%b")
+    ;
+/*
+############# BAR CHART ###################
+-------------------------------------------
+*/
+d3.json('bar_chart.json', function(error, data_set) {
+    if (error) return console.warn(error);
+    var data=[];
+    for (var key in data_set ){
+        data.push(data_set[key]);
+      }
+    // console.log(data);
+    dsBar_Chart(data);
+ 
+  });
+/*
+############# LINE CHART VOTES ###################
+-------------------------------------------
+*/
+var datasetLineVotesChart;
+// set initial group value
+var group = "All";
+d3.json('votes_line.json', function(error, data_set) {
+    if (error) return console.warn(error);
+    var data=[];
+    for (var key in data_set ){
+        data.push(data_set[key]);
+      }
+  datasetLineVotesChart =data;
+  dsLineVotesChart();
+  });
+/*
+############# LINE CHART RATING ##################
+-------------------------------------------
+*/
+// set initial category value
+var group = "All";
+var datasetLineRatingsChart;
+d3.json('ratings_line.json', function(error, data_set) {
+    if (error) return console.warn(error);
+    var data=[];
+    for (var key in data_set ){
+        data.push(data_set[key]);
+      }
+  datasetLineRatingsChart=data;
+  dsLineRatingsChart();
+  });
+  </script>
 
-<script >
-          var svg=document.getElementById('multi_series_line');
-          var height=svg.height.baseVal.value;
-          var width=svg.width.baseVal.value;
-          multi_series_line("multi_series_line","svg_placeholder1",height,width);
-
-
-
-
-          // var svg=document.getElementById('scatter');
-          // var height=svg.height.baseVal.value;
-          // var width=svg.width.baseVal.value;
-          // scatter_plot("scatter","svg_placeholder2",height,width);
-
-</script>
 
   </body>
 </html>
