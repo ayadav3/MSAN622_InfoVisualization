@@ -1,11 +1,5 @@
-/*
-############# Bar Chart ###################
--------------------------------------------
-*/
 
 function dsBar_Chart(data){
-
-   // console.log(data);
 
     data.sort(function(a,b){return d3.ascending(a.count, b.count);});
 
@@ -18,11 +12,11 @@ var color = d3.scale.quantize().domain([data.length,0])
 
   var margin = {top: 300, right: 20, bottom: 80, left: 90};
     var svg = d3.select("#bar_chart")
-       .append("svg")              //create the SVG element inside the <body>
-       .data([data])                   //associate our data with the document
-           .attr("width", width)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+       .append("svg")              
+       .data([data])                   
+           .attr("width", width)           
            .attr("height", height)
-          .append("g")                //make a group to hold our bar chart
+          .append("g")                
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     
@@ -50,11 +44,9 @@ var color = d3.scale.quantize().domain([data.length,0])
         .ticks(5);
 
 
-
-
       x.domain(data.map(function(d) { return d.category; }));
       y.domain([0, d3.max(data, function(d) { 
-        //console.log(d.count);
+
         return d.count; 
       })]);
 
@@ -111,10 +103,7 @@ var color = d3.scale.quantize().domain([data.length,0])
 
 
   function update(d, i) {
-  
-        /* update bar chart when user selects bar of the bar chart */
-        //updateBarChart(dataset[i].category);
-        console.log(d);
+
         updateLine1Chart(d.category, color(i))
         updateLine2Chart(d.category, color(i));
         
@@ -122,10 +111,8 @@ var color = d3.scale.quantize().domain([data.length,0])
   }
 
 
-// ##########################################################################################################################
+
   }
-
-
 
 
 
@@ -157,10 +144,8 @@ function dsLineChartBasics() {
 
 
 function dsLineRatingsChart() {
-
-  console.log(group);
+  
   var firstDatasetLineChart = datasetLineChartChosen(group);    
-  console.log(firstDatasetLineChart)
   
   var basics = dsLineChartBasics();
   
@@ -201,15 +186,13 @@ yAxis.tickFormat(formatxAxis).ticks(5);
 
   var line = d3.svg.line()
       .x(function(d) { return xScale(d.category); })
-      //.x(function(d, i) { return xScale(i); })
-      .y(function(d) { return yScale(d.count); })
-      ;
+      .y(function(d) { return yScale(d.count); });
   
   var svg = d3.select("#lineChart2").append("svg")
       .datum(firstDatasetLineChart)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      // create group and move it so that margins are respected (space for axis and title)
+      
 
   svg.append("g")
       .attr("class", "x axis_line")
@@ -238,13 +221,12 @@ yAxis.tickFormat(formatxAxis).ticks(5);
       .attr("id", "ratingLineChartPlot")
       ;
 
-    /* descriptive titles as part of plot -- start */
+   
   var dsLength=firstDatasetLineChart.length;
       
   plot.append("path")
       .attr("class", "line")
       .attr("d", line)  
-      // add color
     .attr("stroke", "lightgrey")
       ;
     
@@ -301,7 +283,6 @@ function updateLine1Chart(group, colorChosen) {
     .duration(750)          
      .attr("class", "line")
      .attr("d", line) 
-     // add color
     .attr("stroke", colorChosen)
      ;
      
@@ -337,7 +318,6 @@ function dsLineVotesChartBasics() {
 
 function dsLineVotesChart() {
 
-  console.log(group);
   var firstDatasetLineChart = datasetLineVotesChartChosen(group);    
   
   
@@ -378,7 +358,6 @@ yAxis.tickFormat(formatxAxis).ticks(5);
 
   var line = d3.svg.line()
       .x(function(d) { return xScale(d.category); })
-      //.x(function(d, i) { return xScale(i); })
       .y(function(d) { return yScale(d.count); })
       ;
   
@@ -386,7 +365,7 @@ yAxis.tickFormat(formatxAxis).ticks(5);
       .datum(firstDatasetLineChart)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      // create group and move it so that margins are respected (space for axis and title)
+      
 
   svg.append("g")
       .attr("class", "x axis_line")
@@ -421,7 +400,6 @@ yAxis.tickFormat(formatxAxis).ticks(5);
   plot.append("path")
       .attr("class", "line")
       .attr("d", line)  
-      // add color
     .attr("stroke", "grey")
       ;
     
@@ -438,10 +416,6 @@ yAxis.tickFormat(formatxAxis).ticks(5);
 
 }
 
-
- /* ** UPDATE CHART ** */
- 
-/* updates bar chart on request */
 function updateLine2Chart(group, colorChosen) {
 
   var currentDatasetLineChart = datasetLineVotesChartChosen(group);   
@@ -472,7 +446,6 @@ function updateLine2Chart(group, colorChosen) {
     .datum(currentDatasetLineChart)
      ;
      
-  /* descriptive titles as part of plot -- start */
   var dsLength=currentDatasetLineChart.length;
        
   plot
@@ -481,7 +454,7 @@ function updateLine2Chart(group, colorChosen) {
     .duration(750)          
      .attr("class", "line")
      .attr("d", line) 
-     // add color
+
     .attr("stroke", colorChosen)
      ;
      
