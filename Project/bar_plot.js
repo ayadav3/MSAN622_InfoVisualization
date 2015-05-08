@@ -170,7 +170,7 @@ var yAxis = d3.svg.axis()
         //Transition chart to new data
         rect
         .transition()
-        .duration(2000)
+        .duration(1000)
         .ease("linear")
         .each("start", function(){
           d3.select(this)
