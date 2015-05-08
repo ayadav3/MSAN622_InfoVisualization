@@ -159,6 +159,16 @@ var yAxis = d3.svg.axis()
               return Math.abs(yScale(d.Metal_Minerals) - yScale(0)); 
             };  
         }
+        else if(value=="non_food"){
+          var x_value = function(d){return d.Non_Food_Agri_Products;};
+         // var color = function(d){return d.dr_change < 0 ? "negative" : "positive";};
+          var y_value = function(d){
+              return yScale(Math.max(0, d.Non_Food_Agri_Products)); 
+            };
+            var height_value = function(d){
+              return Math.abs(yScale(d.Non_Food_Agri_Products) - yScale(0)); 
+            };  
+        }
 
         //Update y scale
         yScale.domain(d3.extent(data, x_value));
