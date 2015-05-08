@@ -6,3 +6,4 @@ write.csv(df, "movies.csv", row.names=FALSE)
 
 #preprocessing for barplot 1
 
+df1 <- df[]
