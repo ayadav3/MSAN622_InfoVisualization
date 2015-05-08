@@ -78,6 +78,10 @@ ul{
       .details{
         margin-top: 50px;
         margin-left:270px;
+        font-family: sans-serif;
+        margin-right: 150px;
+        font-size: 14px;
+
       }
     </style>
 
@@ -140,7 +144,20 @@ ul{
 <div class="row">
     <div class="details">
       <p><h3>Dataset Summary</h3></p>
-        
+        The dataset contains information about country-wise India exports by principal commodity in 2011-12 and 2012-13. I modified the original dataset by adding continent and commodity category columns. I choose this dataset to see what all products are exported by India and who are the major importers of indian products.
+    </div>
+    <div class="details">
+      <p><h3>Sketch Summary</h3></p>
+      <p>I will be implementing 4 techniques on the choosen dataset. 
+        <li class="ul"><h5>Interactive Bar Plot</h5></li>
+        <p class="list">I will use the value or quantity of exports on the y-axis and the continents on the x-axis. As of now, the dataset does not have a column 'Continent'. I will add this column to the dataset soon. Also, I plan to use filters for selecting the commodity and financial year. I will add a check box to sort the bars. I hope to learn concepts of filtering and sorting.</p>
+        <li class="ul"><h5>Interactive World Map</h5></li>
+        <p class="list">I will use the world map to show the country wise exports of commodities. I plan to use filters to select a commodity and year of exports. The user can select any commodity to see the countries which imported it. On mouse hover, a tooltip will be displayed to show the name of the country and the actual value of export. I hope to learn the use of geo coordinates in D3.</p>
+        <li class="ul"><h5>Small Multiples (Bar Plot)</h5></li>
+        <p class="list">I plan to use small multiples of bar plots to visualize the change in exports of different commodity categories over the two financial years.</p>
+        <li class="ul"><h5>BiPartite</h5></li>
+        <p class="list">I plan to use a Bipartite visualization to see the different categories of commodities exported to countries in the two financial year. I will add categories for the commodities to the dataset. I will be using the value of exports in dollar terms for this visualization. Here is the link of a sample <a href="http://bl.ocks.org/NPashaP/9796212">BiPartite visualization</a>. </p>
+      </p>
     </div>
   </div>
 
