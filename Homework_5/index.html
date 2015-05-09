@@ -1,37 +1,29 @@
-<head>
-    <meta charset="utf-8">
-    <title>Symbol Map Demo</title>
-
-    <!-- load D3 and TopoJSON //-->
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-
-    <!-- load custom CSS and JavaScript //-->
-    <style>
-    <style>
-    body {
-        background-color: whitesmoke;
+<html>
+    <style type="text/css">
+     body {
+        
         margin: 8px 10px;
         padding: 0px;
     }
     svg {
         background-color: white;
         margin: 0px;
+        margin-top: 40px;
         float: left;
     }
     #block {
         max-width: 950px;
     }
     #log {
-        color: dimgray;
-        font-size: 10px;
+        color: black;
+        font-size: 12px;
         font-style: italic;
         text-align: center;
         margin: 0px;
         padding: 0px;
     }
     .country {
-        fill: gainsboro;
+        fill: lightgray;
     }
     .state {
         fill: none;
@@ -53,71 +45,99 @@
      * on the type of underlying object.
      */
     circle.highlight {
-        stroke: orangered;
+        stroke: red;
         stroke-width: 2px;
     }
     path.highlight {
-        fill: whitesmoke;
+        fill: lightgray;
         stroke: tomato;
         stroke-width: 1px;
     }
   </style>
+
+
+    <title>Earthquake Visualization</title>
+
+
+
+    <style type="text/css">
+        body {
+            padding-top: 100px;
+            padding-bottom: 20px;
+        }
+      .offset { margin-top: 50px; }
+      .row {margin-left:140px;}
     </style>
-    <script src="script.js"></script>
 
- </head>
+  </head>
 
-<body>
+  <body>
 
-<div id="block">
-<svg id="map" width="960" height="900"></svg>
-<p id="log">Loading map... please wait.</p>
-</div>
+    
+      <div class ="heading">
+        <center><h2>Homework 5: Earthquake Visualization</h2></center>
+        <center><h3>Student Name: Amit Kumar Yadav</h3></center>
+      </div>
+         <div class="container">
+            <div class="row">
+              <div class="box text-center">
+                  <div id="block" class="col-lg-12">
+              
+                  <svg id="map" width="960" height="500"></svg>
+                  <p id="log">Loading map... please wait.</p>
+                  <script src="http://d3js.org/topojson.v1.min.js"></script>
+                  <script src="http://d3js.org/d3.v3.min.js"></script>
+                  <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+                  <script src="script.js"></script>
+                  </div>
+              </div>
+          </div>
+              </div>
+              <div class = "normal">
+              <p style="text-indent: 15em;">
+              <h5><a href = "https://github.com/ayadav3/MSAN622_InfoVisualization/tree/gh-pages/Homework_5"> D3 Homework 5 Code</a></h5>
+            </p>
+            <div class="normal">
+              <h5><i>Data Preprocessing</i></h5>
+              <p class="normal">
+                I used only three variables to plot the above charts. I extracted 'Drivers', 'front' and 'rear' columns from the Seatbelts dataset. Also, I had to do some preprocessing to extract the month and year.
+            </div>
+            <div class="normal">
+        <h4><u>Functionalities Implemented</u></h4>
 
-<script>
-/*
- * For sample TopoJSON files, go to:
- * https://gist.github.com/mbostock/4090846
- */
-var base = "https://gist.githubusercontent.com/mbostock/4090846/raw/";
-var url = {
-    world: base + "world-110m.json",
-    earthquakes: "4_5_month.csv"
-};
+          <p class ="normal">
+              <dt><h5><i>C-level</i></h5></dt>
+              <dd>Implemented a Multi-Series Line plot and a Stacked Area Plot.</dd>
 
-// Uses reusable chart model
-// See http://bost.ocks.org/mike/chart/
-var chart = symbolMap();
+              <dt><h5><i>B-level</i></h5></dt>
 
-// Update how we access data (need the precip property)
-chart = chart.value(function(d) { return d.mag; });
+              <dd>Implemented tooltip on Multi-Series Line chart and panning on the Stacked Area Chart. Panning is implemented along with brushing functionality.</dd>
 
-// Nested calls to trigger drawing in proper order
-d3.json(url.world, function(mapError, mapJSON) {
-    if (processError(mapError)) return;
+              <dt><h5><i>A-level</i></h5></dt>
 
-    // update map data
-    chart = chart.map(mapJSON);
+              <dd>Implemented brushing functionality on the Stacked Area Plot.</dd>
+              
+         
 
-    // Wait until the map is drawn before loading
-    // and drawing the data values
-    d3.csv(url.earthquakes, function(dataError, dataJSON) {
-        if (processError(dataError)) return;
+          <h4><u>Discussion</u></h4>
+          <p>The Multi-Series Line Plot displays the number of deaths or serious injuries for the drivers, front seat passengers and rear seat panssengers in UK from January 1969 to December 1984. On mousehover event one can see the exact number of deaths or injuries for that point in time.<br>
+          Similarly, the Stacked Area Plot displays the same information. A legend is provided at the bottom of the plot from the different colors.<br>
+          I chose these three variables as they are naturally related to each other. The drivers are more likely to get killed or injured than the other front seat passenger. Similaryly, the front seat passengers are more likely to get killed or injured than the passengers sitting on the rear seats.
+           </p>
 
-        chart = chart.values(dataJSON);
-        chart("map");
-    });
-});
+    
 
-// Load state lookup information
-// Possible some lookups will fail until this loads
-// d3.tsv(url.states, parseStateName, function(error, data) {
-//         if (processError(error)) return;
-//         chart = chart.lookup(data);
-//     }
-// );
 
-</script>
+          </dl>
 
-</body>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-md-8 col-sm-offset-2">
+        
+    </div>
+  </div>
+
+
+  </body>
 </html>

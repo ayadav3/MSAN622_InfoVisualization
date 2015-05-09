@@ -1,4 +1,47 @@
 /*
+ * For sample TopoJSON files, go to:
+ * https://gist.github.com/mbostock/4090846
+ */
+var base = "https://gist.githubusercontent.com/mbostock/4090846/raw/";
+var url = {
+    world: base + "world-50m.json",
+    earthquakes: "4_5_month.csv"
+};
+
+// Uses reusable chart model
+// See http://bost.ocks.org/mike/chart/
+var chart = symbolMap();
+
+// Update how we access data (need the precip property)
+chart = chart.value(function(d) { return d.mag; });
+
+// Nested calls to trigger drawing in proper order
+d3.json(url.world, function(mapError, mapJSON) {
+    if (processError(mapError)) return;
+
+    // update map data
+    chart = chart.map(mapJSON);
+
+    // Wait until the map is drawn before loading
+    // and drawing the data values
+    d3.csv(url.earthquakes, function(dataError, dataJSON) {
+        if (processError(dataError)) return;
+
+        chart = chart.values(dataJSON);
+        chart("map");
+        console.log("hello")
+    });
+});
+
+// Load state lookup information
+// Possible some lookups will fail until this loads
+// d3.tsv(url.states, parseStateName, function(error, data) {
+//         if (processError(error)) return;
+//         chart = chart.lookup(data);
+//     }
+// );
+
+/*
  * If there is an error, insert an error message in the HTML
  * and log the error to the console.
  */
@@ -38,7 +81,7 @@ function symbolMap() {
 
     var lookup = {};
 
-    var projection = d3.geo.mercator();
+    var projection = d3.geo.naturalEarth();
 
     var radius = d3.scale.sqrt().range([5, 20]);
 
@@ -46,7 +89,7 @@ function symbolMap() {
 
     var color = d3.scale.linear()
             .domain([0, 605])
-            .range(["white", "tomato"])
+            .range(["lightblue", "darkblue"])
             .interpolate(d3.interpolateLab);
 
     var map = null; // map data
@@ -69,7 +112,8 @@ function symbolMap() {
 
         // update project scale
         // (this may need to be customized for different projections)
-        projection = projection.scale((bbox.width - 1) / 2 / Math.PI);
+        projection = projection.scale(167)
+                                .precision(.1);
 
         // update projection translation
         projection = projection.translate([
