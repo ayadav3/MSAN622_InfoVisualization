@@ -29,7 +29,7 @@ d3.json(url.world, function(mapError, mapJSON) {
 
         chart = chart.values(dataJSON);
         chart("map");
-        console.log("hello")
+        
     });
 });
 
@@ -81,6 +81,9 @@ function symbolMap() {
 
     var lookup = {};
 
+    var width = 960;
+    var height = 500;
+
     var projection = d3.geo.naturalEarth();
 
     var radius = d3.scale.sqrt().range([5, 20]);
@@ -105,11 +108,25 @@ function symbolMap() {
             return;
         }
 
+        var zoom = d3.behavior.zoom()
+                 //.scaleExtent([1, 8])
+                 .translate([460, 260])
+                 .scale(.9)
+                 .on("zoom", zoomed);
+
         updateLog("Drawing map... please wait.");
 
-        var svg = d3.select("svg#" + id);
+        var svg = d3.select("svg#" + id)
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height",height)
+                    .append("g");
         var bbox = svg.node().getBoundingClientRect();
 
+        var g = svg.append("g")
+
+        svg.call(zoom)
+            .call(zoom.event);
         // update project scale
         // (this may need to be customized for different projections)
         projection = projection.scale(167)
@@ -121,6 +138,7 @@ function symbolMap() {
             bbox.height / 2
         ]);
 
+
         // set path generator based on projection
         var path = d3.geo.path().projection(projection);
 
@@ -130,10 +148,11 @@ function symbolMap() {
 
         // create groups for each of our components
         // this just reduces our search time for specific states
+        
+        // var country = svg.append("g").attr("id", "country");
+        // //var states  = svg.append("g").attr("id", "states");
+        // var symbols = svg.append("g").attr("id", "dots");
 
-        var country = svg.append("g").attr("id", "country");
-        //var states  = svg.append("g").attr("id", "states");
-        var symbols = svg.append("g").attr("id", "dots");
 
         // show that only 1 feature for land
         //console.log(topojson.feature(map, map.objects.land));
@@ -142,7 +161,7 @@ function symbolMap() {
         //console.log(topojson.feature(map, map.objects.states));
 
         // draw base map
-        country.append("path")
+        g.append("path")
             // use datum here because we only have 1 feature,
             // not an array of features (needed for data() call)
             .datum(topojson.feature(map, map.objects.land))
@@ -162,7 +181,7 @@ function symbolMap() {
         //     .classed({"state": true});
 
         // draw symbols
-        symbols.selectAll("circle")
+        g.selectAll("circle")
             .data(values.sort(function(a,b){return d3.descending(value(a), value(b));}) )
             .enter()
             .append("circle")
@@ -177,11 +196,15 @@ function symbolMap() {
             .attr("cy", function(d, i) {
                 return projection([d.longitude, d.latitude])[1];
             })
-            .style("fill", function(d){ return color(+d.depth); })
+            .style("fill", function(d){ return color(d.depth); })
             // .attr("stroke", "darkgrey")
             .classed({"symbol": true})
             .on("mouseover", showHighlight)
             .on("mouseout", hideHighlight);
+
+        function zoomed() {
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
     }
 
 
@@ -347,6 +370,8 @@ function symbolMap() {
         // reset log message
         updateLog();
     }
+
+
 
     return chart;
 }
