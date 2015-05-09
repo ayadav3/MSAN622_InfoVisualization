@@ -99,6 +99,7 @@ function symbolMap() {
     // for our example, we need to reset this!
     var value = function(d) { return d.value; };
 
+
     function chart(id) {
         if (map === null || values === null) {
             console.warn("Unable to draw symbol map: missing data.");
@@ -130,6 +131,7 @@ function symbolMap() {
 
         // create groups for each of our components
         // this just reduces our search time for specific states
+
         var country = svg.append("g").attr("id", "country");
         //var states  = svg.append("g").attr("id", "states");
         var symbols = svg.append("g").attr("id", "dots");
@@ -148,6 +150,7 @@ function symbolMap() {
             .attr("d", path)
             .classed({"country": true});
 
+        
         // draw states (invisible for now)
         // // may need to adjust to draw countries instead?
         // states.selectAll("path")
@@ -181,6 +184,10 @@ function symbolMap() {
             .on("mouseover", showHighlight)
             .on("mouseout", hideHighlight);
     }
+
+
+
+//d3.select(self.frameElement).style("height", height + "px");
 
     /*
      * These are functions for getting and setting values.
