@@ -87,10 +87,9 @@ function symbolMap() {
 
     var log = d3.select("#log");
 
-    var color = d3.scale.linear()
-            .domain([0, 605])
-            .range(["lightblue", "darkblue"])
-            .interpolate(d3.interpolateLab);
+    var color = d3.scale.threshold()
+    .domain([20,100,200])
+    .range(colorbrewer.GnBu[3]);
 
     var map = null; // map data
     var values = null; // values for symbols
@@ -164,7 +163,7 @@ function symbolMap() {
 
         // draw symbols
         symbols.selectAll("circle")
-            .data(values)
+            .data(values.sort(function(a,b){return d3.descending(value(a), value(b));}) )
             .enter()
             .append("circle")
             .attr("r", function(d, i) {
@@ -178,8 +177,8 @@ function symbolMap() {
             .attr("cy", function(d, i) {
                 return projection([d.longitude, d.latitude])[1];
             })
-            .attr("fill", function(d, i){ return color(d.depth); })
-            .attr("stroke", "darkgrey")
+            .style("fill", function(d){ return color(+d.depth); })
+            // .attr("stroke", "darkgrey")
             .classed({"symbol": true})
             .on("mouseover", showHighlight)
             .on("mouseout", hideHighlight);
