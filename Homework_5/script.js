@@ -69,7 +69,7 @@ function symbolMap() {
 
         // update project scale
         // (this may need to be customized for different projections)
-        projection = projection.scale((bbox.width + 1)/2/Math.PI);
+        projection = projection.scale((bbox.width - 1) / 2 / Math.PI);
 
         // update projection translation
         projection = projection.translate([
