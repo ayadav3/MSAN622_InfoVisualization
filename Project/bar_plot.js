@@ -1,8 +1,6 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 750 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
 
 
@@ -19,14 +17,13 @@ d3.csv("bar_chart.csv", function(error, data) {
     d.Coal_Oil = +d.Coal_Oil;
     d.Chemicals = +d.Chemicals;
     d.Marine_Products = +d.Marine_Products;
-    d.Non_Food_Agri_Products = +d.Non_Food_Agri_Products;
     d.Metal_Minerals = +d.Metal_Minerals;
   });
 
-var padding = 25;
+var padding = 10;
 var yScale = d3.scale.linear()
             .domain(d3.extent(data, function(d){return d.Food;}))
-            .range([height,padding]);
+            .range([height-padding,padding]);
 console.log(yScale)
 var xScale = d3.scale.ordinal()
             .domain(data.map(function(d){ return d.Continent;}))
@@ -66,7 +63,7 @@ var yAxis = d3.svg.axis()
       .attr("x", function(d) { return xScale(d.Continent); })
       .attr("width", xScale.rangeBand())
       .attr("y", function(d) { return yScale(d.Food); })
-      .attr("height", function(d) { console.log(yScale(d.Food));return height - yScale(d.Food); });
+      .attr("height", function(d) { return height - yScale(d.Food); });
 
 
 
@@ -74,35 +71,6 @@ var yAxis = d3.svg.axis()
 
 
 
-  // var sortTimeout = setTimeout(function() {
-  //   d3.select("input").property("checked", true).each(change);
-  // }, 2000);
-
-  // function change() {
-  //   clearTimeout(sortTimeout);
-
-  //   // Copy-on-write since tweens are evaluated after a delay.
-  //   var x0 = x.domain(data.sort(this.checked
-  //       ? function(a, b) { return b.Food - a.Food; }
-  //       : function(a, b) { return d3.ascending(a.Continent, b.Continent); })
-  //       .map(function(d) { return d.Continent; }))
-  //       .copy();
-
-  //   svg.selectAll(".bar")
-  //       .sort(function(a, b) { return x0(a.Continent) - x0(b.Continent); });
-
-  //   var transition = svg.transition().duration(750),
-  //       delay = function(d, i) { return i * 50; };
-
-  //   transition.selectAll(".bar")
-  //       .delay(delay)
-  //       .attr("x", function(d) { return x0(d.Continent); });
-
-  //   transition.select(".x.axis")
-  //       .call(xAxis)
-  //     .selectAll("g")
-  //       .delay(delay);
-  // }
 
   d3.selectAll("select").
       on("change", function() {
@@ -159,17 +127,6 @@ var yAxis = d3.svg.axis()
               return Math.abs(yScale(d.Metal_Minerals) - yScale(0)); 
             };  
         }
-        else if(value=="non_food"){
-          var x_value = function(d){return d.Non_Food_Agri_Products;};
-         // var color = function(d){return d.dr_change < 0 ? "negative" : "positive";};
-          var y_value = function(d){
-              return yScale(Math.max(0, d.Non_Food_Agri_Products)); 
-            };
-            var height_value = function(d){
-              return Math.abs(yScale(d.Non_Food_Agri_Products) - yScale(0)); 
-            };  
-        }
-
         //Update y scale
         yScale.domain(d3.extent(data, x_value));
 
@@ -181,7 +138,6 @@ var yAxis = d3.svg.axis()
         rect
         .transition()
         .duration(1000)
-        .ease("linear")
         .each("start", function(){
           d3.select(this)
           .attr("width", "0.2")

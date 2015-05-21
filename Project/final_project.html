@@ -1,0 +1,196 @@
+<html>
+<head>
+    <style type="text/css">
+ body {
+      font: 12px sans-serif;
+    }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+  </style>
+<style>
+.positive{
+    fill: lightsteelblue;
+    fill-opacity: 0.9;
+  }
+.negative{
+    fill: darkred;
+    fill-opacity: 0.9;
+  }
+.axis path,
+.axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+  }
+.axis text {
+      font-family: sans-serif;
+      font-size: 10px;  
+  }
+div.tooltip {   
+    position: absolute;     
+    text-align: center;
+    vertical-align: middle;   
+    width: 150px;                  
+    height: 50px;                 
+    padding: 5px; 
+    color: #000000;          
+    font-size: 12px;     
+    background: #FFF;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    border: 2px;  
+    border-radius: 8px;  
+    pointer-events: none;                  
+  } 
+li{
+  overflow:hidden;
+  display: inline-block;
+}
+ul{
+  padding-left: 0;
+  padding-right: 0;
+}
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+.rect{
+   shape-rendering:crispEdges;
+}
+
+</style>
+
+
+    <title>Final Project</title>
+
+
+
+    <style type="text/css">
+        body {
+            padding-top: 30px;
+            padding-bottom: 20px;
+        }
+      .offset { margin-top: 50px;
+      margin-left:300px; }
+      .details{
+        margin-top: 50px;
+        margin-left:270px;
+        font-family: sans-serif;
+        margin-right: 150px;
+        font-size: 14px;
+
+      }
+      .heading{
+        font-family: sans-serif;
+        font-size: 22px;
+
+        shape-rendering: crispEdges;
+
+      }
+    </style>
+
+</head>
+
+<body>
+
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
+      
+      <script src="d3.legend.js"></script>
+
+      <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.min.js"></script>
+      <script src="colorbrewer.js"></script>
+    
+      <div class ="heading">
+        <center><h2>Final Project</h2></center>
+      </div>
+
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6 col-sm-offset-2">
+                <br>
+              <center><h3>Continent-wise Exports by India (USD)</h3></center>
+            <div class="row offset">
+            <table>
+          <tr>
+            <td>
+              <select>
+                <option id="item" value="food">Food</option>
+                <option id="item" value="chemical">Chemical Products</option>
+                <option id="item" value="petrol">Coal and Petroleum</option>
+                <option id="item" value="marine">Marine Products</option>
+                 <option id="item" value="metal">Metals and Minerals</option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+              <td>
+                <ul>
+                  <li><input type="checkbox" class="checkbox" name="check" value="sort"> </li>
+                  <li>Sort by value</li>
+                </ul>
+              </div>
+            </td>
+
+        </tr>
+          </table>
+      </div>
+                      <center><div id="svg_placeholder1" ></div></center>
+                      <script src="bar_plot.js"></script>
+                </div>
+      </div>
+
+      <div class="row">
+         <div class="col-lg-6 col-sm-offset-2">
+            <center><h2>Category-wise Exports by India (USD)</h2></center>
+            <div id="svg_placeholder2" >
+               <script src="small_multiple.js"></script>
+            </div>  
+         </div>
+      </div>
+
+
+
+   
+
+<div class="row">
+    <div class="details">
+      <p><h3>Dataset Summary</h3></p>
+        The dataset contains information about country-wise India exports by principal commodity in 2011-12 and 2012-13. I modified the original dataset by adding continent and commodity category columns. I choose this dataset to see what all products are exported by India and who are the major importers of indian products.
+    </div>
+    <div class="details">
+      <p><h3>Sketch Summary</h3></p>
+      <p>I will be implementing 4 techniques on the choosen dataset. 
+        <li class="ul"><h5>Interactive Bar Plot</h5></li>
+        <p class="list">I will use the value or quantity of exports on the y-axis and the continents on the x-axis. As of now, the dataset does not have a column 'Continent'. I will add this column to the dataset soon. Also, I plan to use filters for selecting the commodity and financial year. I will add a check box to sort the bars. I hope to learn concepts of filtering and sorting.</p>
+        <li class="ul"><h5>Interactive World Map</h5></li>
+        <p class="list">I will use the world map to show the country wise exports of commodities. I plan to use filters to select a commodity and year of exports. The user can select any commodity to see the countries which imported it. On mouse hover, a tooltip will be displayed to show the name of the country and the actual value of export. I hope to learn the use of geo coordinates in D3.</p>
+        <li class="ul"><h5>Small Multiples (Bar Plot)</h5></li>
+        <p class="list">I plan to use small multiples of bar plots to visualize the change in exports of different commodity categories over the two financial years.</p>
+        <li class="ul"><h5>BiPartite</h5></li>
+        <p class="list">I plan to use a Bipartite visualization to see the different categories of commodities exported to countries in the two financial year. I will add categories for the commodities to the dataset. I will be using the value of exports in dollar terms for this visualization. Here is the link of a sample <a href="http://bl.ocks.org/NPashaP/9796212">BiPartite visualization</a>. </p>
+      </p>
+    </div>
+  </div>
+
+
+
+  </body>
+</html>
+   

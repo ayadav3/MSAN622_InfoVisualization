@@ -7,7 +7,7 @@ var margin = {top: 10, right: 40, bottom: 130, left: 140},
 var formatPercent = d3.format(".0%");
 
 var padding = 100;
-var color = d3.scale.ordinal().range(colorbrewer.Set1[3]);
+var color = d3.scale.ordinal().range(colorbrewer.Dark2[3]);
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -29,7 +29,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>" + d.Commodity_Category + "\t" + d.Year + "</strong><br/><span style='color:#fff'>" + d.USD_Value + " Billion dollars</span>";
+    return  d.Commodity_Category + "\t" + d.Year + "</strong><br/>" + d.USD_Value + " Billion dollars";
   })
 
 // csv loaded asynchronously
@@ -74,10 +74,12 @@ d3.csv("multiple_chart.csv", type, function(data) {
       // .call(yAxis)
     .append("text")
     .attr("x", width/2)
-    .attr("y", 0)
+    .attr("y", -80)
     .attr("dy", ".71em")
     .attr("text-anchor", "middle")
-    .attr("font-size", "1.1em")
+    .attr("font-size", "1.3em")
+    .attr("font-family","san-serif")
+    .attr("font-weight","bold")
     .text(function(d) { return d.key});
 
   // Accessing nested data: https://groups.google.com/forum/#!topic/d3-js/kummm9mS4EA
