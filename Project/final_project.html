@@ -85,9 +85,9 @@ ul{
       position: relative; }
       .details{
         margin-top: 50px;
-        margin-left:270px;
+        margin-left:200px;
         font-family: sans-serif;
-        margin-right: 150px;
+        margin-right: 250px;
         font-size: 14px;
 
       }
@@ -135,7 +135,7 @@ ul{
 
       <div class="row">
          <div >
-            <center><h2>Visulization 2: Commodity Category-wise Exports by India in 2011-12 and 2012-13 (in billion USD)</h2></center>
+            <center><h2>Visualization 2: Commodity Category-wise Exports by India in 2011-12 and 2012-13 (in billion USD)</h2></center>
             <center><a href='visual_2.html'>Click Here</a></center>
                
             </div>  
@@ -145,7 +145,7 @@ ul{
 
       <div class="row">
          <div class="col-lg-6 col-sm-offset-2">
-            <center><h2>Visualization 3: BiPartite Visualization of Exports by India (USD)</h2></center>
+            <center><h2>Visualization 3: Exports of Food Products by India (USD)</h2></center>
             <center><a href='visual_3.html'>Click Here</a></center>
          </div>
       </div>
@@ -153,20 +153,55 @@ ul{
 <div class="row">
     <div class="details">
       <p><h2>Discussion</h2></p>
-        The dataset contains information about country-wise India exports by principal commodity in 2011-12 and 2012-13. I modified the original dataset by adding continent and commodity category columns. I choose this dataset to see what all products are exported by India and who are the major importers of indian products.
-    </div>
-    <div class="details">
-      <p><h3>Sketch Summary</h3></p>
-      <p>I will be implementing 4 techniques on the choosen dataset. 
-        <li class="ul"><h5>Interactive Bar Plot</h5></li>
-        <p class="list">I will use the value or quantity of exports on the y-axis and the continents on the x-axis. As of now, the dataset does not have a column 'Continent'. I will add this column to the dataset soon. Also, I plan to use filters for selecting the commodity and financial year. I will add a check box to sort the bars. I hope to learn concepts of filtering and sorting.</p>
-        <li class="ul"><h5>Interactive World Map</h5></li>
-        <p class="list">I will use the world map to show the country wise exports of commodities. I plan to use filters to select a commodity and year of exports. The user can select any commodity to see the countries which imported it. On mouse hover, a tooltip will be displayed to show the name of the country and the actual value of export. I hope to learn the use of geo coordinates in D3.</p>
-        <li class="ul"><h5>Small Multiples (Bar Plot)</h5></li>
-        <p class="list">I plan to use small multiples of bar plots to visualize the change in exports of different commodity categories over the two financial years.</p>
-        <li class="ul"><h5>BiPartite</h5></li>
-        <p class="list">I plan to use a Bipartite visualization to see the different categories of commodities exported to countries in the two financial year. I will add categories for the commodities to the dataset. I will be using the value of exports in dollar terms for this visualization. Here is the link of a sample <a href="http://bl.ocks.org/NPashaP/9796212">BiPartite visualization</a>. </p>
+      <p><h3>DataSet Summary</h3></p>
+       <p> 
+         The dataset presents the commodity wise exports made by India in the year 2011-12 and 2012-13. In the original dataset, there were mainly four columns namely Commodity, Country, Export Value (2011-12) and Export Value (2012-13). I added continent and commodity category as additional columns to the dataset. For each of the visualizations, I preprocessed the data using R and Python. I choosed to visualize this dataset because of the following reason:
+         <br><br>
+         "Historically, India has been known for exporting Spices, Tea and Coffee to other countries. In the last ten years, India has grown economically at a rapid pace. I am interested to know about the mix of products exported by India. I would like to know whether Tea and Coffee still account for majority of Indian exports? Also, I think it would be interesting to see what all products are exported by India and who are the major importers of indian products."
       </p>
+      <p><h3>Techniques</h3></p>
+      <p><h4>Bar Chart</h4></p>
+      This chart helps to answer the question I raised while choosing the dataset. The chart displays the top 20 commodities exported by India in the year 2012-13. The height of the bars represent the export value in US dollars. The major commodity categories are coded with same color. The tool-tip will show the exact export value and the commodity category type. I chose to use bar chart to see which commodity has the maximum share in Indian exports. It helps in detecting the outlier. The data-density ratio is a bit low because of the major difference between first commodity and others. The lie-factor is 1. The data-ink ratio is also a bit low because of one big outlier.
+
+      <p><h4>Small Multiples</h4></p>
+      I used small multiples to plot the aggregated exports of commodities by category for the two financial years. This plots helps the user understand the trend of Indian exports for the various commodity categories. The height of the bars represent the export value of the commodity category for the given financial year. Since, I am using the same y-scale for all the plots the last two plots have low data-density ratio. However, a consistent y-scale is necessary to compare the exports of different categories. The lie-factor is 1. The data-ink ratio is good.
+
+      <p><h4>biPartite Visualization</h4></p>
+      This visualization is the central part of my project. It gives a lot of information about the exporst in Food category. The plot is divided into two interactive parts; first part represents the exports of Food commodities to various continents in the year 2011-12 and the other second part represents the exports of Food commodities to various continents in the year 2012-13. The user can hover the mouse on the commodity name and bar-segments to highlight the details about that category. It is to be noted that details will be highlighted for both the years. Similarly, the user can hover the mouse on the continent name or the corresponding bar-segment to highlight the details of commodities imported by that continent for both the years. Also, percentages are provided to get an overview of export-mix for a commodity or continent. The user can also see how the percentage of exports has changed in the two years. Also, the user can check how the import-mix of a continent has changed in the two years. The lie-factor for this visualization is 1. The data-density and data-ink ratio are great.
+
+      <p><h3>Interactivity</h3></p>
+      For the bar chart, I implemented sorting, details on demand and filtering. Tool-tip will help in knowing the exact value of exports and category for a commodity. Sorting will help in knowing the order of commodities according to export value. On mouse hover the user can see details and also, bars having the same category will be highlighted. There is a check buttion to sort the bars by height. For the small multiples, I implemented details on demand interactivity. The user can see the exact details of exports for a year.
+      <br><br>
+      In the biPartite visualization, I implemented filtering, details on demand and linked interactivity. The colors represent the various commodities. Please see the description of this technique in the previous section for more details. 
+
+      <p><h3>Feedback</h3></p>
+
+      The prototype I introduced in the class was the bar-chart. The bar-chart dispalyed the Continent-wise exports by India for the year 2012-13. The user could select the commodity category from a drop-down menu and the bar heights would change accordingly.
+      <br><br>
+      I changed the bar chart based on the feedback I received. Initially, I was using continents on the x-axis to visualize continent-wise exports by India. However, for some of the continents the y-values were extremely small and it became difficult to visualize it. So, I came up with another idea and plotted a bar-chart for the top 20 commodities. Also, I removed the drop-down menu as I am using small-multiples to display that information.
+
+      <p><h3>Challenges</h3></p>
+      I came across quite a few challenges during this project. While creating the prototype, I struggled a lot to keep the bar heights within the axis limit for different drop-down selections. On selecting a different category, the bars would go below the x-axis or overlap with the x-axis labels. In order to overcome this issue, I had to hard code the height values for some categories.
+      <br><br>
+      Another issue was in the small-multiples plot. I wanted to add y-axis to all the subplots. However, for some reason the bar-heights for the Coal and Oil category were more than the maximum value of y-axis. I spent about one hour to customize the y-axis according to the category. Finally, after reading a blog post I realized that the y-axis has to be same for all the sub-plots to make a sensible comparison. I changed the Y-axis range by finding the maximum export value among all the categories.
+      <p><h3>Conclusion</h3></p>
+
+      I was under the impression that even today Indian exports primarily consist of Spices, Tea and Coffee. However, I learned that my intuition was wrong. As it can be seen from the first visualization, Petroleum based products account for majority of Indian exports with a value of about 50 billion dollars in the year 2012-2013. Also, it should be noted that out of the 90 different commodities present in the dataset Spices, Tea and Coffee do fall in the top 20 commodities.
+      <br><br>
+      Also, we can see that the biggest annual growth in exports is in the Coal and Oil category. As India is growing economically, most of the major export categories have exprienced growth from 2011-12 to 2012-13.
+      <br><br>
+      I chose the food category for further investigation and used the biPartite plot for it. I concluded that for most of the food commodities, Asian countries import the most from India. Few exception to this fact are the commodities such as Guergam Meal and Coffee. Americas is the largest importer of Guergam Meal whereas Europe is the largest importer of Indian Coffee.
+
+      <p><h3>References</h3></p>
+      I used the following references to create the visualizations for my project.
+      <br><br>
+
+      http://bl.ocks.org/mbostock/9490516<br>
+      http://bl.ocks.org/NPashaP/9796212<br>
+      http://www.d3noob.org/2014/02/attributes-in-d3js.html
+
+
+
     </div>
   </div>
 </div>
