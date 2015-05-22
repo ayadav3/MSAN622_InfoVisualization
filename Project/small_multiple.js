@@ -7,7 +7,7 @@ var margin = {top: 10, right: 40, bottom: 130, left: 140},
 
 
 var padding = 100;
-var color = d3.scale.ordinal().range(colorbrewer.Dark2[3]);
+var color = d3.scale.ordinal().range(colorbrewer.Set2[3])
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -76,7 +76,7 @@ d3.csv("multiple_chart.csv", type, function(data) {
       .attr("y", -30)
       .attr("dy", ".01em")
       .style("text-anchor", "end")
-      .text("Export Value (in million USD)");
+      .text("Export Value (in billion USD)");
 
   svg.append("g")
     .append("text")
@@ -101,7 +101,7 @@ d3.csv("multiple_chart.csv", type, function(data) {
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.USD_Value); })
       .attr("height", function(d) { return height - y(d.USD_Value); })
-      .attr("fill", function(d) {return color(d.USD_Value)})
+      .attr("fill", function(d) {return color(d.Year)})
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 

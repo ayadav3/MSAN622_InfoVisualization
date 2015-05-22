@@ -20,11 +20,15 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
+
+var color = d3.scale.ordinal()
+        .range(colorbrewer.Dark2[7]);
+
 var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Export Value:</strong> <span style='color:red'>" + Math.floor(d.Value_12_13) + " million USD</span>";
+    return "<strong>Export Value:</strong> <span style='color:red'>" + Math.floor(d.Value_12_13) + " million USD</span><br>Commodity Category:<span style='color:red'> "+d.Category+"</span>";
   })
 
 
@@ -42,6 +46,12 @@ d3.csv("bar_chart_1.csv", function(error, data) {
     d.Value_12_13 = +d.Value_12_13;
   });
 
+
+var opacity = d3.scale.linear()
+          .domain([d3.min(data, function (d) { return d[name]; }), 
+                   d3.max(data, function (d) { return d[name]; })])
+          .range([1, .5]);
+          
   x.domain(data.map(function(d) { return d.Commodity; }));
   y.domain([0, d3.max(data, function(d) { return d.Value_12_13; })]);
 
@@ -75,9 +85,32 @@ d3.csv("bar_chart_1.csv", function(error, data) {
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.Value_12_13); })
       .attr("height", function(d) { return height - y(d.Value_12_13); })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .style("fill", function(d){return color(d.Category);})
+      .on('mouseover', function(d){
+          tip.show(d);
+          fade(d.Category,0.2);
+      })
+      .on('mouseout', function(d){
+          tip.hide(d);
+           fadeOut(d);
+      });
 
+
+  function fade(category, opacity) {
+
+        svg.selectAll("rect")
+            .transition().duration(1500)
+            .style("fill", function(d) {return color(d.Category); })
+            .filter(function (d) { return d.Category != category; })
+            .style("opacity", opacity);
+    }
+
+    function fadeOut() {
+        svg.selectAll("rect")
+            .transition().duration(2000)
+            .style("fill", function(d) {return color(d.Category); })
+            .style("opacity", function (d) { opacity(d.Category); });
+    }
   d3.select("input").on("change", change);
 
   var sortTimeout = setTimeout(function() {
