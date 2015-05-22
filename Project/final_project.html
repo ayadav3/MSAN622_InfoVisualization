@@ -3,6 +3,7 @@
     <style type="text/css">
  body {
       font: 12px sans-serif;
+
     }
 
 .axis path,
@@ -21,14 +22,7 @@
 }
   </style>
 <style>
-.positive{
-    fill: lightsteelblue;
-    fill-opacity: 0.9;
-  }
-.negative{
-    fill: darkred;
-    fill-opacity: 0.9;
-  }
+
 .axis path,
 .axis line {
       fill: none;
@@ -40,7 +34,7 @@
       font-size: 10px;  
   }
 div.tooltip {   
-    position: absolute;     
+    position: relative;     
     text-align: center;
     vertical-align: middle;   
     width: 150px;                  
@@ -87,7 +81,8 @@ ul{
             padding-bottom: 20px;
         }
       .offset { margin-top: 50px;
-      margin-left:300px; }
+      margin-left:300px;
+      position: relative; }
       .details{
         margin-top: 50px;
         margin-left:270px;
@@ -122,45 +117,24 @@ ul{
       </div>
 
       <div class="container">
-         <div class="row">
-            <div class="col-lg-6 col-sm-offset-2">
-                <br>
-              <center><h3>Visualization 1: Continent-wise Exports by India (USD)</h3></center>
-            <div class="row offset">
-            <table>
-          <tr>
-            <td>
-              <select>
-                <option id="item" value="food">Food</option>
-                <option id="item" value="chemical">Chemical Products</option>
-                <option id="item" value="petrol">Coal and Petroleum</option>
-                <option id="item" value="marine">Marine Products</option>
-                 <option id="item" value="metal">Metals and Minerals</option>
-              </select>
-            </td>
-        </tr>
-        <tr>
-              <td>
-                <ul>
-                  <li><input type="checkbox" class="checkbox" name="check" value="sort"> </li>
-                  <li>Sort by value</li>
-                </ul>
-              </div>
-            </td>
+      <div class="row">
+         <div >
+            <center><h2>Visualization 1: Top 20 Commodities Exported by India in 2012-2013 (in million USD)</h2></center>
+            <div>
+               <label><input type="checkbox"> Sort values</label>
+               <div  id="svg_placeholder1" >
 
-        </tr>
-          </table>
+                  <script src="bar_plot_1.js"></script>
+            </div>
+         </div>
       </div>
-                      <center><div id="svg_placeholder1" ></div></center>
-                      <script src="bar_plot.js"></script>
-                </div>
-      </div>
+   </div>
 
       <div class="row">
-         <div class="col-lg-6 col-sm-offset-2">
+         <div >
             <center><h2>Visulization 2: Category-wise Exports by India (USD)</h2></center>
-            <div id="svg_placeholder2" >
-               <script src="small_multiple.js"></script>
+            <center><a href='visual_2.html'>Click Here</a></center>
+               
             </div>  
          </div>
       </div>
@@ -169,13 +143,13 @@ ul{
       <div class="row">
          <div class="col-lg-6 col-sm-offset-2">
             <center><h2>Visualization 3: BiPartite Visualization of Exports by India (USD)</h2></center>
-            <center><a href='bipartite.html'>Click Here</a></center>
+            <center><a href='visual_3.html'>Click Here</a></center>
          </div>
       </div>
 
 <div class="row">
     <div class="details">
-      <p><h3>Dataset Summary</h3></p>
+      <p><h3>Discussion</h3></p>
         The dataset contains information about country-wise India exports by principal commodity in 2011-12 and 2012-13. I modified the original dataset by adding continent and commodity category columns. I choose this dataset to see what all products are exported by India and who are the major importers of indian products.
     </div>
     <div class="details">
@@ -192,7 +166,7 @@ ul{
       </p>
     </div>
   </div>
-
+</div>
 
 
   </body>

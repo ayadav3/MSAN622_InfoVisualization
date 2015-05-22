@@ -1,0 +1,43 @@
+<html>
+<style>
+body{
+	width:1200px;
+	margin:100px auto;
+}
+svg text{
+	font-size:12px;
+}
+rect{
+	shape-rendering:crispEdges;
+}
+</style>
+<body>
+	 <script src="http://d3js.org/d3.v3.min.js"></script>
+
+      
+      <script src="d3.legend.js"></script>
+
+      <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.min.js"></script>
+      <script src="colorbrewer.js"></script>
+             <center><h2>BiPartite Visualization of Exports by India (USD)</h2></center>
+               <script src="bipartite.js"></script>
+               <script>
+
+var export_data= [['CASHEW', 'Africa', '21', '18'], ['CASTOR OIL', 'Africa', '8', '7'], ['COFFEE', 'Africa', '54', '40'], ['GROUNDNUT', 'Africa', '11', '8'], ['GUERGAM MEAL', 'Africa', '25', '13'], ['OIL MEALS', 'Africa', '69', '17'], ['OTHER CEREALS', 'Africa', '11', '34'], ['PULSES', 'Africa', '41', '57'], ['RICE', 'Africa', '52', '72'], ['RICE', 'Africa', '868', '1578'], ['SESAME SEEDS', 'Africa', '26', '19'], ['SPICES', 'Africa', '94', '116'], ['SUGAR', 'Africa', '446', '463'], ['TEA', 'Africa', '28', '33'], ['WHEAT', 'Africa', '6', '297'], ['CASHEW', 'Americas', '242', '203'], ['CASTOR OIL', 'Americas', '99', '97'], ['COFFEE', 'Americas', '22', '30'], ['GROUNDNUT', 'Americas', '40', '3'], ['GUERGAM MEAL', 'Americas', '2033', '2816'], ['NIGER SEEDS', 'Americas', '14', '9'], ['OIL MEALS', 'Americas', '3', '3'], ['OTHER CEREALS', 'Americas', '1', '3'], ['PULSES', 'Americas', '4', '5'], ['RICE', 'Americas', '109', '117'], ['RICE', 'Americas', '16', '19'], ['SESAME SEEDS', 'Americas', '48', '61'], ['SPICES', 'Americas', '493', '530'], ['SUGAR', 'Americas', '22', '18'], ['TEA', 'Americas', '60', '64'], ['CASHEW', 'Asia', '248', '255'], ['CASTOR OIL', 'Asia', '343', '366'], ['COFFEE', 'Asia', '140', '145'], ['GROUNDNUT', 'Asia', '738', '612'], ['GUERGAM MEAL', 'Asia', '228', '285'], ['NIGER SEEDS', 'Asia', '1', '1'], ['OIL MEALS', 'Asia', '1698', '2237'], ['OTHER CEREALS', 'Asia', '856', '1256'], ['PULSES', 'Asia', '113', '133'], ['RICE', 'Asia', '2063', '2553'], ['RICE', 'Asia', '457', '621'], ['SESAME SEEDS', 'Asia', '256', '242'], ['SPICES', 'Asia', '1127', '1355'], ['SUGAR', 'Asia', '893', '854'], ['TEA', 'Asia', '276', '328'], ['WHEAT', 'Asia', '156', '1367'], ['CASHEW', 'Australia', '8', '4'], ['CASTOR OIL', 'Australia', '3', '2'], ['COFFEE', 'Australia', '13', '18'], ['GUERGAM MEAL', 'Australia', '41', '37'], ['OIL MEALS', 'Australia', '5', '3'], ['OTHER CEREALS', 'Australia', '1', '0'], ['RICE', 'Australia', '19', '26'], ['RICE', 'Australia', '2', '3'], ['SESAME SEEDS', 'Australia', '7', '10'], ['SPICES', 'Australia', '25', '28'], ['SUGAR', 'Australia', '5', '1'], ['TEA', 'Australia', '23', '22'], ['CASHEW', 'Europe', '177', '165'], ['CASTOR OIL', 'Europe', '272', '213'], ['COFFEE', 'Europe', '491', '516'], ['GROUNDNUT', 'Europe', '44', '23'], ['GUERGAM MEAL', 'Europe', '288', '212'], ['NIGER SEEDS', 'Europe', '4', '4'], ['OIL MEALS', 'Europe', '97', '251'], ['OTHER CEREALS', 'Europe', '4', '12'], ['PULSES', 'Europe', '10', '8'], ['RICE', 'Europe', '209', '310'], ['RICE', 'Europe', '30', '68'], ['SESAME SEEDS', 'Europe', '83', '125'], ['SPICES', 'Europe', '359', '402'], ['SUGAR', 'Europe', '25', '27'], ['TEA', 'Europe', '261', '296']];
+
+var width = 1400, height = 610, margin ={b:0, t:60, l:190, r:30};
+               
+var svg = d3.select("body")
+                        .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
+                        .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
+
+var data = [ 
+        {data:bP.partData(export_data,2), id:'Exports2011-12', header:["Commodity","Continent", "Exports 2011-12 (million USD)"]},
+        {data:bP.partData(export_data,3), id:'Exports2012-13', header:["Commodity","Continent", "Exports 2012-13 (million USD)"]}
+      ];
+
+    bP.draw(data, svg);
+    </script>
+
+</body>
+</html>

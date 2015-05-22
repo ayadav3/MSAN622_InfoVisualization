@@ -4,7 +4,7 @@ var margin = {top: 10, right: 40, bottom: 130, left: 140},
     width = 300- margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-var formatPercent = d3.format(".0%");
+
 
 var padding = 100;
 var color = d3.scale.ordinal().range(colorbrewer.Dark2[3]);
@@ -22,8 +22,7 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left")
-    .tickFormat(formatPercent);
+    .orient("left");
 
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -51,10 +50,10 @@ d3.csv("multiple_chart.csv", type, function(data) {
 
   // Compute the minimum and maximum year and percent across symbols.
   x.domain(data.map(function(d) { return d.Year; }));
-  y.domain([0, d3.max(categories, function(s) { return s.values[0].USD_Value; })]);
+  y.domain([0, d3.max(categories, function(s) { return s.values[1].USD_Value; })]);
 
   // Add an SVG element for each country, with the desired dimensions and margin.
-  var svg = d3.select("#svg_placeholder2").selectAll("svg")
+  var svg = d3.select("body").selectAll("svg")
     .data(categories)
     .enter()
     .append("svg:svg")
@@ -68,10 +67,18 @@ d3.csv("multiple_chart.csv", type, function(data) {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
+
   svg.append("g")
-      // Hide y axis
-      // .attr("class", "y axis")
-      // .call(yAxis)
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -30)
+      .attr("dy", ".01em")
+      .style("text-anchor", "end")
+      .text("Export Value (in million USD)");
+
+  svg.append("g")
     .append("text")
     .attr("x", width/2)
     .attr("y", -80)

@@ -4,12 +4,6 @@ var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 
 
-var svg = d3.select("#svg_placeholder1").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 d3.csv("bar_chart.csv", function(error, data) {
 
   data.forEach(function(d) {
@@ -22,12 +16,20 @@ d3.csv("bar_chart.csv", function(error, data) {
 
 var padding = 10;
 var yScale = d3.scale.linear()
-            .domain(d3.extent(data, function(d){return d.Food;}))
-            .range([height-padding,padding]);
-console.log(yScale)
+            .domain(d3.extent(data, function(d){return d.Chemicals;}))
+            .range([height+padding,padding]);
+console.log(yScale.range)
 var xScale = d3.scale.ordinal()
             .domain(data.map(function(d){ return d.Continent;}))
-            .rangeRoundBands([padding,width-padding],.5);
+            .rangeRoundBands([padding,width+padding],.1);
+
+
+
+var svg = d3.select("#svg_placeholder1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var key = function(d){return d.Continent};
 var xAxis = d3.svg.axis()
@@ -49,7 +51,7 @@ var yAxis = d3.svg.axis()
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-    .append("text")
+      .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
@@ -58,12 +60,12 @@ var yAxis = d3.svg.axis()
 
   svg.selectAll(".bar")
       .data(data)
-    .enter().append("rect")
+      .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return xScale(d.Continent); })
       .attr("width", xScale.rangeBand())
-      .attr("y", function(d) { return yScale(d.Food); })
-      .attr("height", function(d) { return height - yScale(d.Food); });
+      .attr("y", function(d) { return yScale(d.Chemicals); })
+      .attr("height", function(d) { return height - yScale(d.Chemicals); });
 
 
 
@@ -148,7 +150,8 @@ var yAxis = d3.svg.axis()
             },
             y: y_value,
             width: xScale.rangeBand(),
-            height: height_value
+            height: height_value 
+
               
         });
 
